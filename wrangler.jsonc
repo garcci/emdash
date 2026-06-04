@@ -7,19 +7,13 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "emdash",
-		},
+			"database_name": "emdash"
+		}
 	],
 	"r2_buckets": [
 		{
 			"binding": "MEDIA",
-			"bucket_name": "emdash",
-		},
-	],
-	// Worker Loader for plugin sandboxing
-	// "worker_loaders": [
-	// 	{
-	// 		"binding": "LOADER",
-	// 	},
-	// ],
+			"bucket_name": "emdash"
+		}
+	]
 }
