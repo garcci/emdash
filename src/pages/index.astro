@@ -9,6 +9,7 @@ import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import { resolveImageUrl, isExternalImage } from "../utils/media";
 
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
@@ -91,7 +92,11 @@ function formatDate(date: Date | null | undefined) {
 						<div class="featured-grid">
 							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
 								<div class="featured-image">
-									<Image image={featuredPost.data.featured_image} />
+									{isExternalImage(featuredPost.data.featured_image) ? (
+										<img src={resolveImageUrl(featuredPost.data.featured_image)} alt={featuredPost.data.title || ""} />
+									) : (
+										<Image image={featuredPost.data.featured_image} />
+									)}
 								</div>
 							</a>
 							<div class="featured-content">

@@ -24,10 +24,5 @@
     "emdash": "^0.16.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.7",
-    "@cloudflare/workers-types": "^4.20260305.1",
-    "wrangler": "^4.95.0"
   }
 }

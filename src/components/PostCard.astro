@@ -1,6 +1,7 @@
 ---
 import type { MediaValue, ContentBylineCredit } from "emdash";
 import { Image } from "emdash/ui";
+import { resolveImageUrl, isExternalImage } from "../utils/media";
 
 interface Props {
 	title: string;
@@ -38,7 +39,11 @@ const formattedDate = date
 		{
 			featuredImage ? (
 				<div class="card-image">
-					<Image image={featuredImage} />
+					{isExternalImage(featuredImage) ? (
+						<img src={resolveImageUrl(featuredImage)} alt={title} />
+					) : (
+						<Image image={featuredImage} />
+					)}
 				</div>
 			) : (
 				<div class="card-placeholder" />
