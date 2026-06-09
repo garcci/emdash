@@ -9,11 +9,12 @@ import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
-import { resolveImageUrl, isExternalImage } from "../utils/media";
+import ImageRenderer from "../components/ImageRenderer.astro";
+import { formatDate } from "../utils/date";
+import { POSTS_PER_PAGE } from "../utils/constants";
 
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
-const POSTS_PER_PAGE = 7;
 
 const [{ entries: posts, cacheHint }, settings] = await Promise.all([
 	getEmDashCollection("posts", {
@@ -63,15 +64,7 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 	bylines: post.data.bylines ?? [],
 }));
 
-// Format date helper
-function formatDate(date: Date | null | undefined) {
-	if (!date) return null;
-	return date.toLocaleDateString("zh-CN", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
-}
+// Format date helper -- now imported from ../utils/date
 ---
 
 <Base title={siteTitle} description={siteTagline}>
@@ -92,16 +85,12 @@ function formatDate(date: Date | null | undefined) {
 						<div class="featured-grid">
 							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
 								<div class="featured-image">
-									{isExternalImage(featuredPost.data.featured_image) ? (
-										<img
-											src={resolveImageUrl(featuredPost.data.featured_image)}
-											alt={featuredPost.data.featured_image?.alt || featuredPost.data.title || ""}
-											width={featuredPost.data.featured_image?.width}
-											height={featuredPost.data.featured_image?.height}
-										/>
-									) : (
-										<Image image={featuredPost.data.featured_image} />
-									)}
+									<ImageRenderer
+										image={featuredPost.data.featured_image}
+										alt={featuredPost.data.title || ""}
+										width={featuredPost.data.featured_image?.width}
+										height={featuredPost.data.featured_image?.height}
+									/>
 								</div>
 							</a>
 							<div class="featured-content">

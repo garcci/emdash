@@ -135,3 +135,4 @@ EmDash 根据 `provider` 字段以两种格式存储图片：
 | 2025-06-09 | AGENTS.md 中文本地化，更新站点自定义说明 | `.qoder/rules/AGENTS.md` |
 | 2025-06-09 | 全面汉化：页面文案、日期格式、seed 数据（站点设置、菜单、分类、标签） | `src/layouts/Base.astro`, `src/pages/**/*.astro`, `seed/seed.json` |
 | 2025-06-09 | 外部图片添加 width/height 属性，防止布局抖动（CLS） | `src/pages/posts/[slug].astro`, `src/components/PostCard.astro`, `src/pages/index.astro` |
+| 2025-06-09 | 架构优化：提取 date.ts/constants.ts 工具函数；提取 ImageRenderer/ArchiveGrid 组件；合并 category/tag 重复代码；提取 ThemeScript 拆分 Base.astro | `src/utils/date.ts`, `src/utils/constants.ts`, `src/components/ImageRenderer.astro`, `src/components/ArchiveGrid.astro`, `src/components/layout/ThemeScript.astro`, `src/layouts/Base.astro`, `src/pages/**/*.astro` |

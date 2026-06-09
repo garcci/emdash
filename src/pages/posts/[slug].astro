@@ -9,7 +9,6 @@ import {
 	getSiteSettings,
 } from "emdash";
 import {
-	Image,
 	PortableText,
 	Comments,
 	CommentForm,
@@ -17,9 +16,11 @@ import {
 } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
+import ImageRenderer from "../../components/ImageRenderer.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
-import { resolveImageUrl, isExternalImage } from "../../utils/media";
+import { resolveImageUrl } from "../../utils/media";
+import { formatDate } from "../../utils/date";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -107,12 +108,7 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 	bylines: p.data.bylines ?? [],
 }));
 
-const publishDate =
-	post.data.publishedAt?.toLocaleDateString("zh-CN", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	}) ?? null;
+const publishDate = formatDate(post.data.publishedAt);
 ---
 
 <Base
@@ -132,16 +128,12 @@ const publishDate =
 		{
 			post.data.featured_image && (
 				<div class="article-hero" {...post.edit.featured_image}>
-					{isExternalImage(post.data.featured_image) ? (
-						<img
-							src={resolveImageUrl(post.data.featured_image)}
-							alt={post.data.featured_image?.alt || post.data.title || ""}
-							width={post.data.featured_image?.width}
-							height={post.data.featured_image?.height}
-						/>
-					) : (
-						<Image image={post.data.featured_image} />
-					)}
+					<ImageRenderer
+						image={post.data.featured_image}
+						alt={post.data.title || ""}
+						width={post.data.featured_image?.width}
+						height={post.data.featured_image?.height}
+					/>
 				</div>
 			)
 		}

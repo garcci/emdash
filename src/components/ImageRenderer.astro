@@ -1,0 +1,35 @@
+---
+import type { MediaValue } from "emdash";
+import { Image as EmDashImage } from "emdash/ui";
+import { resolveImageUrl, isExternalImage } from "../utils/media";
+
+interface Props {
+	image: MediaValue | undefined;
+	alt?: string;
+	class?: string;
+	width?: number;
+	height?: number;
+}
+
+const { image, alt, width, height } = Astro.props;
+const imgClass = Astro.props.class;
+
+const isExternal = isExternalImage(image);
+const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
+---
+
+{
+	image && (
+		isExternal ? (
+			<img
+				src={imgUrl}
+				alt={alt || ""}
+				class={imgClass}
+				width={width}
+				height={height}
+			/>
+		) : (
+			<EmDashImage image={image} class={imgClass} />
+		)
+	)
+}
