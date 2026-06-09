@@ -122,7 +122,9 @@ EmDash 根据 `provider` 字段以两种格式存储图片：
 
 - **语言**：在 `src/layouts/Base.astro` 中设置为 `zh-CN`（原为 `en`）
 - **Google 翻译**：通过 `Base.astro` 中的 `<meta name="google" content="notranslate" />` 禁用
-- **ICP备案号**：添加至 `src/layouts/Base.astro` 的页脚
+- **ICP备案号**：添加至 `src/layouts/Base.astro` 的页脚，备案号居中显示并添加 hover 效果
+- **AGENTS.md 中文本地化**：项目文档 `.qoder/rules/AGENTS.md` 已翻译为中文
+- **变更日志机制**：在 AGENTS.md 中建立 Change Log 表格，每次修改后记录日期、变更内容和影响文件
 - **SSH 推送**：远程 URL 使用 SSH（`git@github.com:...`）
 
 ## 变更日志
