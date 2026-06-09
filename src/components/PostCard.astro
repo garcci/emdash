@@ -40,7 +40,12 @@ const formattedDate = date
 			featuredImage ? (
 				<div class="card-image">
 					{isExternalImage(featuredImage) ? (
-						<img src={resolveImageUrl(featuredImage)} alt={title} />
+						<img
+							src={resolveImageUrl(featuredImage)}
+							alt={featuredImage?.alt || title}
+							width={featuredImage?.width}
+							height={featuredImage?.height}
+						/>
 					) : (
 						<Image image={featuredImage} />
 					)}

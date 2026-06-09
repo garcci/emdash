@@ -93,7 +93,12 @@ function formatDate(date: Date | null | undefined) {
 							<a href={`/posts/${featuredPost.id}`} class="featured-image-link">
 								<div class="featured-image">
 									{isExternalImage(featuredPost.data.featured_image) ? (
-										<img src={resolveImageUrl(featuredPost.data.featured_image)} alt={featuredPost.data.title || ""} />
+										<img
+											src={resolveImageUrl(featuredPost.data.featured_image)}
+											alt={featuredPost.data.featured_image?.alt || featuredPost.data.title || ""}
+											width={featuredPost.data.featured_image?.width}
+											height={featuredPost.data.featured_image?.height}
+										/>
 									) : (
 										<Image image={featuredPost.data.featured_image} />
 									)}

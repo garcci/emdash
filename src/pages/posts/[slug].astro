@@ -133,7 +133,12 @@ const publishDate =
 			post.data.featured_image && (
 				<div class="article-hero" {...post.edit.featured_image}>
 					{isExternalImage(post.data.featured_image) ? (
-						<img src={resolveImageUrl(post.data.featured_image)} alt={post.data.title || ""} />
+						<img
+							src={resolveImageUrl(post.data.featured_image)}
+							alt={post.data.featured_image?.alt || post.data.title || ""}
+							width={post.data.featured_image?.width}
+							height={post.data.featured_image?.height}
+						/>
 					) : (
 						<Image image={post.data.featured_image} />
 					)}
