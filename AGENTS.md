@@ -19,6 +19,7 @@ The admin UI is at `http://localhost:4321/_emdash/admin`.
 | `emdash-env.d.ts`        | Generated types for collections (auto-regenerated on dev server start)             |
 | `src/layouts/Base.astro` | Base layout with EmDash wiring (menus, search, page contributions)                 |
 | `src/pages/`             | Astro pages -- all server-rendered                                                 |
+| `src/utils/media.ts`      | Image URL resolver for external & local images (see Project-specific Notes)        |
 
 ## Skills
 
@@ -102,3 +103,21 @@ CSS variables worth knowing:
 - Don't use stock blog copy ("Welcome to my blog", "Stay tuned for more"). Write a real tagline that says what this blog is about.
 - Don't seed the home page with three identical placeholder posts. If you only have one real post, show one real post.
 - Don't enable comments without a plan to moderate them. The template doesn't ship a comments system by default for a reason.
+
+## Project-specific Notes
+
+### External Image Handling
+
+EmDash stores images in two formats depending on the `provider` field:
+
+- **Local images**: `provider: "local"` with `meta.storageKey` or `id` -- rendered via `<Image />` from `emdash/ui`
+- **External images**: `provider: "external-url"` with `previewUrl` -- rendered via native `<img>` using `resolveImageUrl()` from `src/utils/media.ts`
+
+Always check `isExternalImage()` before choosing the rendering strategy. See `src/utils/media.ts` for the implementation.
+
+### Site Customisations
+
+- **Language**: Set to `zh-CN` in `src/layouts/Base.astro` (was `en`)
+- **Google Translate**: Disabled via `<meta name="google" content="notranslate" />` in `Base.astro`
+- **ICP备案号**: Added to footer in `src/layouts/Base.astro`
+- **SSH Push**: Remote URL uses SSH (`git@github.com:...`)
