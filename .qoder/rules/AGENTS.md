@@ -1,132 +1,132 @@
 ---
 trigger: always_on
 ---
-This is an EmDash site -- a CMS built on Astro with a full admin UI.
+这是一个基于 Astro 构建的 EmDash 网站，带有完整的后台管理界面。
 
-## Commands
+## 命令
 
 ```bash
-npx emdash dev        # Start dev server (runs migrations, seeds, generates types)
-npx emdash types      # Regenerate TypeScript types from schema
+npx emdash dev        # 启动开发服务器（运行迁移、种子、生成类型）
+npx emdash types      # 根据 schema 重新生成 TypeScript 类型
 ```
 
-The admin UI is at `http://localhost:4321/_emdash/admin`.
+后台管理界面地址：`http://localhost:4321/_emdash/admin`。
 
-## Key Files
+## 关键文件
 
-| File                     | Purpose                                                                            |
+| 文件                     | 用途                                                                            |
 | ------------------------ | ---------------------------------------------------------------------------------- |
-| `astro.config.mjs`       | Astro config with `emdash()` integration, database, and storage                    |
-| `src/live.config.ts`     | EmDash loader registration (boilerplate -- don't modify)                           |
-| `seed/seed.json`         | Schema definition + demo content (collections, fields, taxonomies, menus, widgets) |
-| `emdash-env.d.ts`        | Generated types for collections (auto-regenerated on dev server start)             |
-| `src/layouts/Base.astro` | Base layout with EmDash wiring (menus, search, page contributions)                 |
-| `src/pages/`             | Astro pages -- all server-rendered                                                 |
-| `src/utils/media.ts`      | Image URL resolver for external & local images (see Project-specific Notes)        |
+| `astro.config.mjs`       | Astro 配置，包含 `emdash()` 集成、数据库和存储配置                    |
+| `src/live.config.ts`     | EmDash loader 注册（样板代码 — 请勿修改）                           |
+| `seed/seed.json`         | Schema 定义 + 演示内容（集合、字段、分类、菜单、小部件） |
+| `emdash-env.d.ts`        | 自动生成的集合类型（开发服务器启动时自动生成）             |
+| `src/layouts/Base.astro` | 基础布局，包含 EmDash 接线（菜单、搜索、页面贡献）                 |
+| `src/pages/`             | Astro 页面 — 全部服务端渲染                                                 |
+| `src/utils/media.ts`      | 外部图片和本地图片的 URL 解析器（参见「项目特定说明」）        |
 
-## Skills
+## 技能
 
-Agent skills are in `.agents/skills/`. Load them when working on specific tasks:
+Agent 技能位于 `.agents/skills/` 目录。处理特定任务时按需加载：
 
-- **building-emdash-site** -- Querying content, rendering Portable Text, schema design, seed files, site features (menus, widgets, search, SEO, comments, bylines). Start here.
-- **creating-plugins** -- Building EmDash plugins with hooks, storage, admin UI, API routes, and Portable Text block types.
-- **emdash-cli** -- CLI commands for content management, seeding, type generation, and visual editing flow.
+- **building-emdash-site** -- 查询内容、渲染 Portable Text、schema 设计、种子文件、站点功能（菜单、小部件、搜索、SEO、评论、署名）。从这里开始。
+- **creating-plugins** -- 构建 EmDash 插件，包括 hooks、存储、后台管理 UI、API 路由和 Portable Text 块类型。
+- **emdash-cli** -- CLI 命令，用于内容管理、种子、类型生成和可视化编辑流程。
 
-## Documentation
+## 文档
 
-The EmDash docs are available as an MCP server at `https://docs.emdashcms.com/mcp`. When you need to verify an API, hook, config option, field type, or pattern, call `search_docs` against the live documentation rather than relying on training-data recall. The docs reflect current behaviour; assumptions may not.
+EmDash 文档以 MCP 服务器形式提供，地址为 `https://docs.emdashcms.com/mcp`。需要验证 API、hook、配置选项、字段类型或模式时，请调用 `search_docs` 查询实时文档，而非依赖训练数据。文档反映当前行为，假设可能不准确。
 
-This template ships with `.mcp.json`, `.cursor/mcp.json`, and `.vscode/mcp.json` so Claude Code, Cursor, and VS Code auto-discover the docs server. Other tools (OpenCode, Windsurf, etc.) need a manual one-time setup -- see [docs.emdashcms.com/docs-mcp](https://docs.emdashcms.com/docs-mcp).
+本模板已内置 `.mcp.json`、`.cursor/mcp.json` 和 `.vscode/mcp.json`，因此 Claude Code、Cursor 和 VS Code 可自动发现文档服务器。其他工具（OpenCode、Windsurf 等）需要手动一次性设置 — 参见 [docs.emdashcms.com/docs-mcp](https://docs.emdashcms.com/docs-mcp)。
 
-## Rules
+## 规则
 
-- All content pages must be server-rendered (`output: "server"`). No `getStaticPaths()` for CMS content.
-- Image fields are objects (`{ src, alt }`), not strings. Use `<Image image={...} />` from `"emdash/ui"`.
-- `entry.id` is the slug (for URLs). `entry.data.id` is the database ULID (for API calls like `getEntryTerms`).
-- Always call `Astro.cache.set(cacheHint)` on pages that query content.
-- Taxonomy names in queries must match the seed's `"name"` field exactly (e.g., `"category"` not `"categories"`).
+- 所有内容页面必须服务端渲染（`output: "server"`）。CMS 内容不要使用 `getStaticPaths()`。
+- 图片字段是对象（`{ src, alt }`），不是字符串。使用 `"emdash/ui"` 中的 `<Image image={...} />`。
+- `entry.id` 是 slug（用于 URL）。`entry.data.id` 是数据库 ULID（用于 `getEntryTerms` 等 API 调用）。
+- 查询内容的页面务必调用 `Astro.cache.set(cacheHint)`。
+- 查询中的分类名必须完全匹配种子中的 `"name"` 字段（例如 `"category"` 而非 `"categories"`）。
 
-## This Template
+## 本模板
 
-A blog with posts, pages, categories, tags, full-text search, and RSS. Designed for personal writing, technical writing, indie newsletters, and anything where the writing is the product. Editorial-tech aesthetic: confident sans-serif, restrained accent, real article structure with bylines and reading time.
+一个包含文章、页面、分类、标签、全文搜索和 RSS 的博客。适用于个人写作、技术写作、独立通讯等以写作为产品的场景。编辑-科技美学风格：自信的无衬线字体克制的强调色、真实的文章结构，包含署名和阅读时间。
 
-## Pages
+## 页面
 
-| Page        | Path               | What it shows                                                                                          |
+| 页面        | 路径               | 内容                                                                                          |
 | ----------- | ------------------ | ------------------------------------------------------------------------------------------------------ |
-| Home        | `/`                | Featured post hero (large image + excerpt), latest posts grid                                          |
-| All posts   | `/posts`           | Article count, full post list with excerpts and tag chips                                              |
-| Post detail | `/posts/[slug]`    | Featured image, title, body, left meta column (authors + date), right TOC + search + categories gutter |
-| Search      | `/search`          | Full-text search UI                                                                                    |
-| Page        | `/pages/[slug]`    | Static page content (Portable Text)                                                                    |
-| Category    | `/category/[slug]` | Posts filtered by category                                                                             |
-| Tag         | `/tag/[slug]`      | Posts filtered by tag                                                                                  |
-| RSS         | `/rss.xml`         | Generated feed                                                                                         |
+| 首页        | `/`                | 精选文章头图（大图 + 摘要），最新文章网格                                          |
+| 全部文章   | `/posts`           | 文章数量，完整文章列表（含摘要和标签芯片）                                              |
+| 文章详情 | `/posts/[slug]`    | 头图、标题、正文、左侧元信息栏（作者 + 日期）、右侧目录 + 搜索 + 分类栏 |
+| 搜索      | `/search`          | 全文搜索 UI                                                                                    |
+| 页面        | `/pages/[slug]`    | 静态页面内容（Portable Text）                                                                    |
+| 分类    | `/category/[slug]` | 按分类过滤的文章                                                                             |
+| 标签         | `/tag/[slug]`      | 按标签过滤的文章                                                                                  |
+| RSS         | `/rss.xml`         | 生成的订阅源                                                                                         |
 
 ## Schema
 
-- `posts` collection: `title`, `featured_image`, `content` (Portable Text), `excerpt` (text).
-- `pages` collection: `title`, `content` (Portable Text). Used for `/about` etc.
-- Taxonomies: `category`, `tag`.
-- Single `primary` menu (Home, About, Posts by default).
+- `posts` 集合：`title`、`featured_image`、`content`（Portable Text）、`excerpt`（文本）。
+- `pages` 集合：`title`、`content`（Portable Text）。用于 `/about` 等。
+- 分类：`category`、`tag`。
+- 单个 `primary` 菜单（默认包含 Home、About、Posts）。
 
-Site settings have `title` and `tagline` -- both render in the header / footer.
+站点设置中有 `title` 和 `tagline` — 均渲染在头部 / 页脚。
 
-## Visual character
+## 视觉特征
 
-Single typeface: **Inter** on `--font-sans`, used for everything including headings (with tighter letter-spacing on h1/h2). **JetBrains Mono** on `--font-mono` for inline code and code blocks. Body and headings share the same family; weight and size carry the hierarchy.
+单一字体：**Inter** 用于 `--font-sans`，包括所有标题（h1/h2 使用更紧的字间距）。**JetBrains Mono** 用于 `--font-mono`，用于行内代码和代码块。正文和标题共享同一家族；字重和字号承载层级。
 
-The accent is `#0066cc` -- used for links, the post-card title hover, and the search input focus ring. There's also a secondary text colour (`--color-text-secondary`) and a `--color-muted` for meta info. Don't add a second accent.
+强调色为 `#0066cc` -- 用于链接、文章卡片标题悬停和搜索输入框聚焦环。还有次要文字颜色（`--color-text-secondary`）和 `--color-muted` 用于元信息。不要添加第二种强调色。
 
-The article layout is the standout feature: a three-column reading view with a left meta column (author bylines, date), centred 680px body column, and a right gutter for search, table of contents, and categories. Don't flatten that into one column on desktop -- the layout signals "this is something to read".
+文章布局是亮点：三栏阅读视图，左侧元信息栏（作者署名、日期），中间 680px 正文栏，右侧边栏用于搜索、目录和分类。桌面端不要将其压成一栏 — 这种布局传达着「这是用来阅读的内容」。
 
-## Customisation
+## 自定义
 
-`src/styles/theme.css` is the only file to edit for visual changes. Every CSS variable from `Base.astro` is listed there as a commented default -- uncomment and change to override. The dark mode palette is defined inside `Base.astro` itself; light-mode overrides in `theme.css` won't affect dark mode. To customise dark mode, add `@media (prefers-color-scheme: dark)` and `:root.dark` rules in `theme.css`.
+`src/styles/theme.css` 是唯一需要编辑的文件来进行视觉更改。`Base.astro` 中的每个 CSS 变量都作为注释默认值列在那里 — 取消注释并修改以覆盖。深色模式调色板在 `Base.astro` 内部定义；`theme.css` 中的浅色模式覆盖不会影响深色模式。要自定义深色模式，请在 `theme.css` 中添加 `@media (prefers-color-scheme: dark)` 和 `:root.dark` 规则。
 
-Fonts are configured in `astro.config.mjs` under `fonts:`. To swap the body face, change the `name:` for the entry bound to `cssVariable: "--font-sans"`. Good alternatives: Geist, IBM Plex Sans, Söhne (if you have a licence), Public Sans. If you want a serif-bodied blog, swap to a humanist serif like Source Serif, Crimson Pro, or Lora -- but then also raise `--font-size-base` to `1.0625rem` for readability.
+字体在 `astro.config.mjs` 的 `fonts:` 下配置。要更换正文字体，修改绑定到 `cssVariable: "--font-sans"` 的条目的 `name:`。推荐替代方案：Geist、IBM Plex Sans、Söhne（如果你有授权）、Public Sans。如果想要衬线正文的博客，换成人文衬线字体如 Source Serif、Crimson Pro 或 Lora — 但同时要将 `--font-size-base` 提高到 `1.0625rem` 以保证可读性。
 
-CSS variables worth knowing:
+值得了解的 CSS 变量：
 
 - `--color-accent`, `--color-accent-hover`, `--color-on-accent`, `--color-accent-ring`
 - `--color-bg`, `--color-bg-subtle`, `--color-surface`, `--color-text`, `--color-text-secondary`, `--color-muted`, `--color-border`, `--color-border-subtle`
 - `--font-sans`, `--font-mono`
-- `--tracking-tight` / `--tracking-snug` / `--tracking-wide` / `--tracking-wider` -- letter-spacing tokens used across headings and meta labels
-- `--content-width` (680px) -- article body column
-- `--wide-width` (1200px) -- max container
-- `--gutter-width` (200px) -- right sidebar (TOC) on article pages
-- `--meta-col-width` (180px) -- left meta column on article pages
-- `--avatar-size-{xs,sm,md,lg}` -- byline avatar sizes at different scales
+- `--tracking-tight` / `--tracking-snug` / `--tracking-wide` / `--tracking-wider` -- 标题和元标签使用的字间距令牌
+- `--content-width` (680px) -- 文章正文栏
+- `--wide-width` (1200px) -- 最大容器宽度
+- `--gutter-width` (200px) -- 文章页面右侧边栏（目录）
+- `--meta-col-width` (180px) -- 文章页面左侧元信息栏
+- `--avatar-size-{xs,sm,md,lg}` -- 不同比例的署名头像尺寸
 
-## What not to do
+## 禁忌
 
-- Don't add a second accent colour or coloured section backgrounds. The page should be black, white, and one blue.
-- Don't replace Inter with a display sans (Bebas, Anton, etc.). Headings rely on weight contrast, not novelty faces.
-- Don't collapse the article gutter on desktop -- it's part of the reading experience.
-- Don't use stock blog copy ("Welcome to my blog", "Stay tuned for more"). Write a real tagline that says what this blog is about.
-- Don't seed the home page with three identical placeholder posts. If you only have one real post, show one real post.
-- Don't enable comments without a plan to moderate them. The template doesn't ship a comments system by default for a reason.
+- 不要添加第二种强调色或彩色区块背景。页面应该是黑、白、一种蓝。
+- 不要用展示性无衬线字体（Bebas、Anton 等）替换 Inter。标题依赖字重对比，而非新奇字体。
+- 桌面端不要折叠文章边栏 — 它是阅读体验的一部分。
+- 不要使用通用博客文案（"Welcome to my blog"、"Stay tuned for more"）。写一个真实的标语，说明这个博客是关于什么的。
+- 不要用三个相同的占位文章填充首页。如果只有一篇真实文章，就展示一篇真实文章。
+- 没有审核计划就不要启用评论。模板默认不附带评论系统是有原因的。
 
-## Project-specific Notes
+## 项目特定说明
 
-### External Image Handling
+### 外部图片处理
 
-EmDash stores images in two formats depending on the `provider` field:
+EmDash 根据 `provider` 字段以两种格式存储图片：
 
-- **Local images**: `provider: "local"` with `meta.storageKey` or `id` -- rendered via `<Image />` from `emdash/ui`
-- **External images**: `provider: "external-url"` with `previewUrl` -- rendered via native `<img>` using `resolveImageUrl()` from `src/utils/media.ts`
+- **本地图片**：`provider: "local"`，带有 `meta.storageKey` 或 `id` -- 通过 `emdash/ui` 的 `<Image />` 渲染
+- **外部图片**：`provider: "external-url"`，带有 `previewUrl` -- 通过原生 `<img>` 使用 `src/utils/media.ts` 中的 `resolveImageUrl()` 渲染
 
-Always check `isExternalImage()` before choosing the rendering strategy. See `src/utils/media.ts` for the implementation.
+选择渲染策略前务必检查 `isExternalImage()`。详见 `src/utils/media.ts` 中的实现。
 
-### Site Customisations
+### 站点自定义
 
-- **Language**: Set to `zh-CN` in `src/layouts/Base.astro` (was `en`)
-- **Google Translate**: Disabled via `<meta name="google" content="notranslate" />` in `Base.astro`
-- **ICP备案号**: Added to footer in `src/layouts/Base.astro`
-- **SSH Push**: Remote URL uses SSH (`git@github.com:...`)
+- **语言**：在 `src/layouts/Base.astro` 中设置为 `zh-CN`（原为 `en`）
+- **Google 翻译**：通过 `Base.astro` 中的 `<meta name="google" content="notranslate" />` 禁用
+- **ICP备案号**：添加至 `src/layouts/Base.astro` 的页脚
+- **SSH 推送**：远程 URL 使用 SSH（`git@github.com:...`）
 
-## Change Log
+## 变更日志
 
-| Date | Change | Files |
+| 日期 | 变更 | 文件 |
 |------|--------|-------|
 | 2025-06-09 | 优化备案号布局：保持footer-bottom三列居中，添加hover变色效果 | `src/layouts/Base.astro` |
