@@ -202,9 +202,7 @@ const isLoggedIn = !!Astro.locals.user;
 					<p class="footer-copyright">
 						Powered by <a href="https://emdashcms.com">EmDash</a>
 					</p>
-					<p class="footer-beian">
-						<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">湘ICP备20009092号</a>
-					</p>
+					<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="footer-beian">湘ICP备20009092号</a>
 					<div class="theme-switcher">
 						<button
 							type="button"
@@ -881,11 +879,13 @@ const isLoggedIn = !!Astro.locals.user;
 			.footer-beian {
 				justify-self: center;
 				font-size: var(--font-size-sm);
-				color: var(--color-muted);
+				color: var(--color-text-secondary);
+				text-decoration: none;
+				transition: color var(--transition-fast);
 			}
 
-			.footer-beian a {
-				color: var(--color-text-secondary);
+			.footer-beian:hover {
+				color: var(--color-accent);
 			}
 
 			.theme-switcher {
