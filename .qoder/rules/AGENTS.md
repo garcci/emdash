@@ -134,3 +134,4 @@ EmDash 根据 `provider` 字段以两种格式存储图片：
 | 2025-06-09 | 优化备案号布局：保持footer-bottom三列居中，添加hover变色效果 | `src/layouts/Base.astro` |
 | 2025-06-09 | AGENTS.md 中文本地化，更新站点自定义说明 | `.qoder/rules/AGENTS.md` |
 | 2025-06-09 | 全面汉化：页面文案、日期格式、seed 数据（站点设置、菜单、分类、标签） | `src/layouts/Base.astro`, `src/pages/**/*.astro`, `seed/seed.json` |
+| 2025-06-09 | 外部图片添加 width/height 属性，防止布局抖动（CLS） | `src/pages/posts/[slug].astro`, `src/components/PostCard.astro`, `src/pages/index.astro` |
