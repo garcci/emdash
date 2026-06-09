@@ -66,7 +66,7 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 // Format date helper
 function formatDate(date: Date | null | undefined) {
 	if (!date) return null;
-	return date.toLocaleDateString("en-US", {
+	return date.toLocaleDateString("zh-CN", {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
@@ -165,17 +165,17 @@ function formatDate(date: Date | null | undefined) {
 				{gridPostsWithTags.length > 0 && (
 					<section class="posts-section">
 						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
+							<h2 class="section-title">最新文章</h2>
 							{hasMorePosts && (
 								<a href="/posts" class="section-link">
-									View all
+									查看全部
 								</a>
 							)}
 						</header>
 						<div class="posts-grid">
 							{gridPostsWithTags.map(({ post, tags, bylines }) => (
 								<PostCard
-									title={post.data.title ?? "Untitled"}
+									title={post.data.title ?? "无标题"}
 									excerpt={post.data.excerpt}
 									featuredImage={post.data.featured_image}
 									href={`/posts/${post.id}`}

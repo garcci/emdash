@@ -7,8 +7,8 @@
 		"author": "EmDash"
 	},
 	"settings": {
-		"title": "My Blog",
-		"tagline": "Thoughts on building for the web"
+		"title": "我的博客",
+		"tagline": "关于构建网络的一些思考"
 	},
 	"collections": [
 		{
@@ -75,15 +75,15 @@
 			"terms": [
 				{
 					"slug": "development",
-					"label": "Development"
+					"label": "开发"
 				},
 				{
 					"slug": "design",
-					"label": "Design"
+					"label": "设计"
 				},
 				{
 					"slug": "notes",
-					"label": "Notes"
+					"label": "笔记"
 				}
 			]
 		},
@@ -96,19 +96,19 @@
 			"terms": [
 				{
 					"slug": "webdev",
-					"label": "Web Development"
+					"label": "网页开发"
 				},
 				{
 					"slug": "opinion",
-					"label": "Opinion"
+					"label": "观点"
 				},
 				{
 					"slug": "tools",
-					"label": "Tools"
+					"label": "工具"
 				},
 				{
 					"slug": "creativity",
-					"label": "Creativity"
+					"label": "创意"
 				}
 			]
 		}
@@ -133,17 +133,17 @@
 			"items": [
 				{
 					"type": "custom",
-					"label": "Home",
+					"label": "首页",
 					"url": "/"
 				},
 				{
 					"type": "custom",
-					"label": "About",
+					"label": "关于",
 					"url": "/pages/about"
 				},
 				{
 					"type": "custom",
-					"label": "Posts",
+					"label": "文章",
 					"url": "/posts"
 				}
 			]
