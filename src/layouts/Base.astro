@@ -348,6 +348,23 @@ const isLoggedIn = !!Astro.locals.user;
 					border-radius: 50%;
 					background: var(--color-muted);
 				}
+
+				/* Tag pill — reused across card, featured, and list item components */
+				.tag-pill {
+					display: inline-block;
+					padding: var(--tag-padding-y) var(--spacing-2);
+					font-size: var(--font-size-xs);
+					color: var(--color-text-secondary);
+					background: var(--color-surface);
+					border-radius: var(--radius);
+					text-decoration: none;
+					transition: color var(--transition-fast), background var(--transition-fast);
+				}
+
+				.tag-pill:hover {
+					color: var(--color-text);
+					background: var(--color-border);
+				}
 			}
 		</style>
 

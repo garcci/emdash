@@ -66,7 +66,7 @@ const { post, tags, bylines } = Astro.props;
 		tags.length > 0 && (
 			<div class="post-tags">
 				{tags.slice(0, 3).map((t) => (
-					<a href={`/tag/${t.slug}`} class="post-tag">
+					<a href={`/tag/${t.slug}`} class="tag-pill">
 						{t.label}
 					</a>
 				))}
@@ -164,24 +164,6 @@ const { post, tags, bylines } = Astro.props;
 		flex-wrap: wrap;
 		gap: var(--spacing-2);
 		margin-top: var(--spacing-4);
-	}
-
-	.post-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-2);
-		font-size: var(--font-size-xs);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.post-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
 	}
 
 	@media (max-width: 600px) {

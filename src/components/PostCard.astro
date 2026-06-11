@@ -98,7 +98,7 @@ const formattedDate = formatDate(date, { month: "short" });
 		tags && tags.length > 0 && (
 			<div class="card-tags">
 				{tags.slice(0, 2).map((tag) => (
-					<a href={`/tag/${tag.slug}`} class="card-tag">
+					<a href={`/tag/${tag.slug}`} class="tag-pill">
 						{tag.label}
 					</a>
 				))}
@@ -193,24 +193,6 @@ const formattedDate = formatDate(date, { month: "short" });
 		flex-wrap: wrap;
 		gap: var(--spacing-2);
 		margin-top: var(--spacing-3);
-	}
-
-	.card-tag {
-		display: inline-block;
-		padding: var(--tag-padding-y) var(--spacing-2);
-		font-size: var(--font-size-xs);
-		color: var(--color-text-secondary);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		text-decoration: none;
-		transition:
-			color var(--transition-fast),
-			background var(--transition-fast);
-	}
-
-	.card-tag:hover {
-		color: var(--color-text);
-		background: var(--color-border);
 	}
 
 	/* Byline styles */
