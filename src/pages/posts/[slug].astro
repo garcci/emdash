@@ -121,9 +121,7 @@ const publishDate = formatDate(post.data.publishedAt);
 					{
 						bylines.length > 0 && (
 							<div class="meta-block byline-block">
-								<span class="meta-label">
-									{bylines.length === 1 ? "作者" : "作者"}
-								</span>
+								<span class="meta-label">作者</span>
 								<div class="bylines">
 									<BylineCard credits={bylines} />
 								</div>
