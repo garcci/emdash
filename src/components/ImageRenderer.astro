@@ -9,9 +9,10 @@ interface Props {
 	className?: string;
 	width?: number;
 	height?: number;
+	loading?: "eager" | "lazy";
 }
 
-const { image, alt, className, width, height } = Astro.props;
+const { image, alt, className, width, height, loading } = Astro.props;
 
 const isExternal = isExternalImage(image);
 const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
@@ -26,6 +27,8 @@ const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
 				class={className}
 				width={width}
 				height={height}
+				loading={loading}
+				decoding="async"
 			/>
 		) : (
 			<EmDashImage image={image} class={className} />
