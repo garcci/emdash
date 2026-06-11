@@ -950,18 +950,8 @@ const isLoggedIn = !!Astro.locals.user;
 		</style>
 
 		<script>
-			// ⌘K / Ctrl+K to focus search
-			document.addEventListener("keydown", (e) => {
-				if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-					e.preventDefault();
-					const searchInput = document.querySelector(
-						".site-search-input"
-					) as HTMLInputElement;
-					if (searchInput) {
-						searchInput.focus();
-					}
-				}
-			});
+			import { initSearchShortcut } from "../utils/search-shortcut";
+			initSearchShortcut();
 		</script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
