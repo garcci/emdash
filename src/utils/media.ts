@@ -14,6 +14,11 @@ export function resolveImageUrl(image: unknown): string | undefined {
 		}
 	}
 
+	// Check for direct src
+	if (typeof img.src === "string" && img.src) {
+		return img.src;
+	}
+
 	// Local image: build from meta.storageKey
 	const meta = img.meta as Record<string, unknown> | undefined;
 	const storageKey =
@@ -27,6 +32,20 @@ export function resolveImageUrl(image: unknown): string | undefined {
 	}
 
 	return undefined;
+}
+
+/**
+ * Resolve an image to an absolute URL, suitable for OG meta tags.
+ * Prepends origin to relative local image paths.
+ */
+export function getAbsoluteImageUrl(
+	image: unknown,
+	origin: string
+): string | undefined {
+	const url = resolveImageUrl(image);
+	if (!url) return undefined;
+	if (url.startsWith("http")) return url;
+	return `${origin}${url}`;
 }
 
 /**

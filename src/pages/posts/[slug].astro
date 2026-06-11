@@ -19,7 +19,7 @@ import PostCard from "../../components/PostCard.astro";
 import ImageRenderer from "../../components/ImageRenderer.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
-import { resolveImageUrl } from "../../utils/media";
+import { getAbsoluteImageUrl } from "../../utils/media";
 import { formatDate } from "../../utils/date";
 
 const slug = decodeSlug(Astro.params.slug);
@@ -37,34 +37,7 @@ if (!post) {
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 // Get featured image URL for OG fallback
-// The image may have src (external) or meta.storageKey (local)
-function getImageUrl(img: unknown): string | undefined {
-	if (!img || typeof img !== "object") return undefined;
-	const image = img as Record<string, unknown>;
-	// External image: use previewUrl directly
-	if (image.provider === "external-url") {
-		const previewUrl = image.previewUrl;
-		if (typeof previewUrl === "string" && previewUrl) {
-			return previewUrl;
-		}
-	}
-	// Check for direct src
-	if (typeof image.src === "string" && image.src) {
-		return image.src.startsWith("http")
-			? image.src
-			: `${Astro.url.origin}${image.src}`;
-	}
-	// Build from storageKey for local images
-	const meta = image.meta as Record<string, unknown> | undefined;
-	const storageKey =
-		(typeof meta?.storageKey === "string" ? meta.storageKey : undefined) ||
-		(typeof image.id === "string" ? image.id : undefined);
-	if (storageKey) {
-		return `${Astro.url.origin}/_emdash/api/media/file/${storageKey}`;
-	}
-	return undefined;
-}
-const featuredImageUrl = getImageUrl(post.data.featured_image);
+const featuredImageUrl = getAbsoluteImageUrl(post.data.featured_image, Astro.url.origin);
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 
 // Generate SEO meta from content
