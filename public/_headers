@@ -1,0 +1,10 @@
+# Cloudflare Pages custom headers
+# https://developers.cloudflare.com/pages/platform/headers/
+
+# HTML pages — always revalidate (content may change)
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Astro hashed assets (CSS, JS, fonts) — immutable, cache forever
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
