@@ -8,6 +8,7 @@ import {
 import Base from "../../layouts/Base.astro";
 import ArchiveGrid from "../../components/ArchiveGrid.astro";
 import ArchiveHeader from "../../components/ArchiveHeader.astro";
+import ArchiveSection from "../../components/ArchiveSection.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 const term = slug ? await getTerm("tag", slug) : null;
@@ -40,7 +41,7 @@ const filteredPosts = posts.map((post) => ({
 	title={`标签：${term.label}`}
 	description={`${term.label} 标签下的全部文章`}
 >
-	<section class="archive-section">
+	<ArchiveSection>
 		<ArchiveHeader
 			label="标签"
 			termLabel={term.label}
@@ -48,5 +49,5 @@ const filteredPosts = posts.map((post) => ({
 		/>
 
 		<ArchiveGrid posts={filteredPosts} />
-	</section>
+	</ArchiveSection>
 </Base>
