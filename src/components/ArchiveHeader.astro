@@ -1,0 +1,18 @@
+---
+interface Props {
+	label: string;
+	termLabel: string;
+	count: number;
+}
+
+const { label, termLabel, count } = Astro.props;
+---
+
+<header class="archive-header">
+	<span class="archive-label">{label}</span>
+	<h1 class="archive-title">{termLabel}</h1>
+	<p class="archive-count">
+		{count}
+		{count === 1 ? "篇文章" : "篇文章"}
+	</p>
+</header>

@@ -7,6 +7,7 @@ import {
 } from "emdash";
 import Base from "../../layouts/Base.astro";
 import ArchiveGrid from "../../components/ArchiveGrid.astro";
+import ArchiveHeader from "../../components/ArchiveHeader.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 const term = slug ? await getTerm("tag", slug) : null;
@@ -40,14 +41,11 @@ const filteredPosts = posts.map((post) => ({
 	description={`${term.label} 标签下的全部文章`}
 >
 	<section class="archive-section">
-		<header class="archive-header">
-			<span class="archive-label">标签</span>
-			<h1 class="archive-title">{term.label}</h1>
-			<p class="archive-count">
-				{filteredPosts.length}
-				{filteredPosts.length === 1 ? "篇文章" : "篇文章"}
-			</p>
-		</header>
+		<ArchiveHeader
+			label="标签"
+			termLabel={term.label}
+			count={filteredPosts.length}
+		/>
 
 		<ArchiveGrid posts={filteredPosts} />
 	</section>
