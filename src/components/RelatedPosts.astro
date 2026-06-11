@@ -1,0 +1,77 @@
+---
+import PostCard from "./PostCard.astro";
+
+interface Props {
+	posts: Array<{
+		post: any;
+		tags: Array<{ slug: string; label: string }>;
+		bylines: any[];
+		readingTime: string;
+	}>;
+	title?: string;
+}
+
+const { posts, title = "继续阅读" } = Astro.props;
+---
+
+{
+	posts.length > 0 && (
+		<section class="more-posts">
+			<div class="more-inner">
+				<h2 class="more-title">{title}</h2>
+				<div class="more-grid">
+					{posts.map(({ post: p, tags, bylines, readingTime }) => (
+						<PostCard
+							title={p.data.title}
+							excerpt={p.data.excerpt}
+							featuredImage={p.data.featured_image}
+							href={`/posts/${p.id}`}
+							date={p.data.publishedAt ?? undefined}
+							readingTime={readingTime}
+							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
+							bylines={bylines}
+						/>
+					))}
+				</div>
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.more-posts {
+		background: var(--color-bg-subtle);
+		padding: var(--spacing-16) 0;
+		margin-top: var(--spacing-16);
+	}
+
+	.more-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: 0 var(--spacing-6);
+	}
+
+	.more-title {
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+		margin-bottom: var(--spacing-10);
+	}
+
+	.more-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--spacing-8);
+	}
+
+	@media (max-width: 900px) {
+		.more-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.more-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
