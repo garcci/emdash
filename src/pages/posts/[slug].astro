@@ -24,6 +24,7 @@ import { buildToc } from "../../utils/toc";
 import ArticleSidebar from "../../components/ArticleSidebar.astro";
 import ArticleMetaCol from "../../components/ArticleMetaCol.astro";
 import RelatedPosts from "../../components/RelatedPosts.astro";
+import ArticleHeader from "../../components/ArticleHeader.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -127,40 +128,15 @@ const publishDate = formatDate(post.data.publishedAt);
 
 			{/* Main content */}
 			<div class="article-main">
-				<header class="article-header">
-					<div class="article-meta">
-						{
-							bylines.length > 0 && (
-								<>
-									<span class="article-meta-byline">
-										{bylines.map((credit, i) => (
-											<>
-												{i > 0 && ", "}
-												{credit.byline.displayName}
-											</>
-										))}
-									</span>
-									<span class="meta-dot" />
-								</>
-							)
-						}
-						{
-							publishDate && (
-								<>
-									<time>{publishDate}</time>
-									<span class="meta-dot" />
-								</>
-							)
-						}
-						<span>{readingTime} 分钟阅读</span>
-					</div>
-					<h1 class="article-title" {...post.edit.title}>{post.data.title}</h1>
-					{
-						post.data.excerpt && (
-							<p class="article-excerpt" {...post.edit.excerpt}>{post.data.excerpt}</p>
-						)
-					}
-				</header>
+				<ArticleHeader
+					bylines={bylines}
+					publishDate={publishDate}
+					readingTime={readingTime}
+					title={post.data.title}
+					excerpt={post.data.excerpt}
+					editTitle={post.edit.title}
+					editExcerpt={post.edit.excerpt}
+				/>
 
 				<div class="article-content">
 					<PortableText value={post.data.content} />
@@ -218,40 +194,6 @@ const publishDate = formatDate(post.data.publishedAt);
 	/* Main content column */
 	.article-main {
 		min-width: 0;
-	}
-
-	.article-header {
-		margin-bottom: var(--spacing-10);
-	}
-
-	.article-header .article-meta {
-		display: none;
-		align-items: center;
-		flex-wrap: wrap;
-		column-gap: var(--spacing-3);
-		row-gap: var(--spacing-1);
-		font-size: var(--font-size-sm);
-		color: var(--color-muted);
-		margin-bottom: var(--spacing-4);
-	}
-
-	.article-meta-byline {
-		font-weight: 500;
-		color: var(--color-text-secondary);
-	}
-
-	.article-title {
-		font-size: clamp(2rem, 5vw, var(--font-size-5xl));
-		font-weight: 700;
-		line-height: var(--leading-tight);
-		letter-spacing: var(--tracking-tight);
-		margin-bottom: var(--spacing-4);
-	}
-
-	.article-excerpt {
-		font-size: var(--font-size-xl);
-		line-height: var(--leading-relaxed);
-		color: var(--color-text-secondary);
 	}
 
 	/* Article content typography */
@@ -355,10 +297,6 @@ const publishDate = formatDate(post.data.publishedAt);
 		.article-meta-col,
 		.article-sidebar {
 			display: none;
-		}
-
-		.article-header .article-meta {
-			display: flex;
 		}
 	}
 
