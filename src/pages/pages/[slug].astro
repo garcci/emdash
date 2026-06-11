@@ -1,7 +1,7 @@
 ---
 import { getEmDashEntry, decodeSlug } from "emdash";
-import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import ProseContent from "../../components/ProseContent.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -27,9 +27,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 			<h1 class="page-title" {...page.edit.title}>{page.data.title}</h1>
 		</header>
 
-		<div class="page-content">
-			<PortableText value={page.data.content} />
-		</div>
+		<ProseContent value={page.data.content} className="page-content" />
 	</article>
 </Base>
 
@@ -50,59 +48,4 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 		line-height: var(--leading-tight);
 	}
 
-	.page-content :global(p) {
-		margin-bottom: 1.5em;
-	}
-
-	.page-content :global(h2) {
-		font-size: var(--font-size-2xl);
-		margin-top: 2em;
-		margin-bottom: 0.75em;
-	}
-
-	.page-content :global(h3) {
-		font-size: var(--font-size-xl);
-		margin-top: 1.75em;
-		margin-bottom: 0.5em;
-	}
-
-	.page-content :global(blockquote) {
-		margin: 1.5em 0;
-		padding-left: var(--spacing-6);
-		border-left: 3px solid var(--color-border);
-		color: var(--color-muted);
-	}
-
-	.page-content :global(pre) {
-		margin: 1.5em 0;
-		padding: var(--spacing-4);
-		background: var(--color-surface);
-		border-radius: var(--radius);
-		overflow-x: auto;
-		font-family: var(--font-mono);
-		font-size: var(--font-size-sm);
-	}
-
-	.page-content :global(code) {
-		font-family: var(--font-mono);
-		font-size: 0.9em;
-		background: var(--color-surface);
-		padding: 0.15em 0.3em;
-		border-radius: var(--radius);
-	}
-
-	.page-content :global(pre code) {
-		background: none;
-		padding: 0;
-	}
-
-	.page-content :global(ul),
-	.page-content :global(ol) {
-		margin-bottom: 1.5em;
-		padding-left: var(--spacing-5);
-	}
-
-	.page-content :global(li) {
-		margin-bottom: 0.5em;
-	}
 </style>
