@@ -1,6 +1,7 @@
 ---
 import type { MediaValue, ContentBylineCredit } from "emdash";
 import ImageRenderer from "./ImageRenderer.astro";
+import { formatDate } from "../utils/date";
 
 interface Props {
 	title: string;
@@ -24,13 +25,7 @@ const {
 	bylines,
 } = Astro.props;
 
-const formattedDate = date
-	? date.toLocaleDateString("zh-CN", {
-			year: "numeric",
-			month: "short",
-			day: "numeric",
-		})
-	: null;
+const formattedDate = formatDate(date, { month: "short" });
 ---
 
 <article class="post-card">
