@@ -14,8 +14,6 @@ import {
 } from "emdash/ui";
 import ArticleComments from "../../components/ArticleComments.astro";
 import Base from "../../layouts/Base.astro";
-import PostCard from "../../components/PostCard.astro";
-import ImageRenderer from "../../components/ImageRenderer.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { getAbsoluteImageUrl } from "../../utils/media";
@@ -25,6 +23,7 @@ import ArticleSidebar from "../../components/ArticleSidebar.astro";
 import ArticleMetaCol from "../../components/ArticleMetaCol.astro";
 import RelatedPosts from "../../components/RelatedPosts.astro";
 import ArticleHeader from "../../components/ArticleHeader.astro";
+import ArticleHero from "../../components/ArticleHero.astro";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -102,19 +101,11 @@ const publishDate = formatDate(post.data.publishedAt);
 	content={{ collection: "posts", id: post.data.id, slug }}
 >
 	<article class="article">
-		{/* Hero: Full-width featured image */}
-		{
-			post.data.featured_image && (
-				<div class="article-hero" {...post.edit.featured_image}>
-					<ImageRenderer
-						image={post.data.featured_image}
-						alt={post.data.title || ""}
-						width={post.data.featured_image?.width}
-						height={post.data.featured_image?.height}
-					/>
-				</div>
-			)
-		}
+		<ArticleHero
+			image={post.data.featured_image}
+			title={post.data.title}
+			edit={post.edit.featured_image}
+		/>
 
 		{/* Three-column layout */}
 		<div class="article-grid">
@@ -162,21 +153,6 @@ const publishDate = formatDate(post.data.publishedAt);
 	.article {
 		max-width: var(--wide-width);
 		margin: 0 auto;
-	}
-
-	/* Hero image - full width within container */
-	.article-hero {
-		margin: var(--spacing-16) var(--spacing-6);
-		border-radius: var(--radius-lg);
-		overflow: hidden;
-		background: var(--color-surface);
-		aspect-ratio: 16 / 9;
-	}
-	
-	.article-hero img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 	}
 
 	/* Three-column grid */
