@@ -203,23 +203,6 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
 		}
 
-		.featured-image-link {
-			margin-left: 0;
-		}
-
-		.featured-grid {
-			grid-template-columns: 1fr;
-			gap: var(--spacing-6);
-		}
-
-		.featured-image {
-			border-radius: var(--radius-lg);
-		}
-
-		.featured-image img {
-			aspect-ratio: 16 / 9;
-		}
-
 		.posts-grid {
 			grid-template-columns: repeat(2, 1fr);
 			gap: var(--spacing-8) var(--spacing-6);
@@ -227,10 +210,6 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 	}
 
 	@media (max-width: 600px) {
-		.featured-title {
-			font-size: var(--font-size-2xl);
-		}
-
 		.posts-grid {
 			grid-template-columns: 1fr;
 			gap: var(--spacing-8);
