@@ -1,0 +1,57 @@
+---
+interface Props {
+	query: string;
+}
+
+const { query } = Astro.props;
+---
+
+<form method="get" action="/search" class="search-form">
+	<input
+		type="search"
+		name="q"
+		value={query}
+		placeholder="搜索文章..."
+		class="search-input"
+		autofocus
+	/>
+	<button type="submit" class="search-button">搜索</button>
+</form>
+
+<style>
+	.search-form {
+		display: flex;
+		gap: var(--spacing-2);
+		margin-bottom: var(--spacing-8);
+	}
+
+	.search-input {
+		flex: 1;
+		padding: var(--spacing-2) var(--spacing-4);
+		font-size: var(--font-size-base);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	.search-input:focus {
+		outline: none;
+		border-color: var(--color-accent);
+	}
+
+	.search-button {
+		padding: var(--spacing-2) var(--spacing-6);
+		font-size: var(--font-size-base);
+		background: var(--color-accent);
+		color: var(--color-on-accent);
+		border: none;
+		border-radius: var(--radius);
+		cursor: pointer;
+		font-weight: 500;
+	}
+
+	.search-button:hover {
+		opacity: 0.9;
+	}
+</style>
