@@ -1,0 +1,56 @@
+---
+import LiveSearch from "emdash/ui/search";
+
+interface MenuItem {
+	url: string;
+	target?: string;
+	label: string;
+}
+
+interface Props {
+	siteTitle: string;
+	siteLogo?: { url: string; alt?: string } | null;
+	menuItems?: MenuItem[];
+	isLoggedIn: boolean;
+}
+
+const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
+---
+
+<header class="site-header">
+	<nav class="nav">
+		<a href="/" class="site-title">
+			{
+				siteLogo
+					? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="site-logo-img" />
+					: siteTitle
+			}
+		</a>
+		<div class="nav-right">
+			<LiveSearch
+				placeholder="搜索文章..."
+				class="site-search"
+				inputClass="site-search-input"
+				resultsClass="site-search-results"
+				resultClass="site-search-result"
+				collections={["posts", "pages"]}
+			/>
+			<div class="nav-links">
+				{
+					menuItems.map((item) => (
+						<a href={item.url} target={item.target}>
+							{item.label}
+						</a>
+					))
+				}
+			</div>
+		</div>
+		{
+			isLoggedIn && (
+				<a href="/_emdash/admin" class="nav-admin">
+					管理
+				</a>
+			)
+		}
+	</nav>
+</header>
