@@ -6,6 +6,7 @@ import FeaturedPost from "../components/FeaturedPost.astro";
 import { getReadingTime, formatReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import { POSTS_PER_PAGE } from "../utils/constants";
+import EmptyState from "../components/EmptyState.astro";
 
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
@@ -63,13 +64,12 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 <Base title={siteTitle} description={siteTagline}>
 	{
 		posts.length === 0 ? (
-			<section class="empty-state">
-				<h2>暂无文章</h2>
-				<p>在后台管理面板创建您的第一篇文章。</p>
-				<a href="/_emdash/admin/content/posts/new" class="btn">
-					创建文章
-				</a>
-			</section>
+			<EmptyState
+				title="暂无文章"
+				description="在后台管理面板创建您的第一篇文章。"
+				actionText="创建文章"
+				actionHref="/_emdash/admin/content/posts/new"
+			/>
 		) : (
 			<div class="home-content">
 				{/* Featured Post - Side by side */}
@@ -150,51 +150,10 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 	}
 
 	/* Posts Grid */
-	.posts-section {
-	}
-
 	.posts-grid {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: var(--spacing-12) var(--spacing-8);
-	}
-
-	/* Empty State */
-	.empty-state {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--spacing-3);
-		text-align: center;
-		padding: var(--spacing-20) var(--spacing-6);
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.empty-state h2 {
-		font-size: var(--font-size-2xl);
-		font-weight: 600;
-	}
-
-	.empty-state p {
-		color: var(--color-muted);
-	}
-
-	.btn {
-		display: inline-block;
-		margin-top: var(--spacing-4);
-		padding: var(--spacing-3) var(--spacing-6);
-		background: var(--color-accent);
-		color: var(--color-on-accent);
-		text-decoration: none;
-		border-radius: var(--radius);
-		font-size: var(--font-size-sm);
-		font-weight: 500;
-		transition: background var(--transition-fast);
-	}
-
-	.btn:hover {
-		background: var(--color-accent-hover);
 	}
 
 	/* Responsive */

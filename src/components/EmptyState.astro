@@ -1,0 +1,59 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	actionText?: string;
+	actionHref?: string;
+}
+
+const { title, description, actionText, actionHref } = Astro.props;
+---
+
+<section class="empty-state">
+	<h2>{title}</h2>
+	<p>{description}</p>
+	{
+		actionText && actionHref && (
+			<a href={actionHref} class="btn">{actionText}</a>
+		)
+	}
+</section>
+
+<style>
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--spacing-3);
+		text-align: center;
+		padding: var(--spacing-20) var(--spacing-6);
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	.empty-state h2 {
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+	}
+
+	.empty-state p {
+		color: var(--color-muted);
+	}
+
+	.btn {
+		display: inline-block;
+		margin-top: var(--spacing-4);
+		padding: var(--spacing-3) var(--spacing-6);
+		background: var(--color-accent);
+		color: var(--color-on-accent);
+		text-decoration: none;
+		border-radius: var(--radius);
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		transition: background var(--transition-fast);
+	}
+
+	.btn:hover {
+		background: var(--color-accent-hover);
+	}
+</style>
