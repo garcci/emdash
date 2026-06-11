@@ -1,0 +1,64 @@
+---
+import { Comments, CommentForm } from "emdash/ui";
+
+interface Props {
+	collection: string;
+	contentId: string;
+	threaded?: boolean;
+}
+
+const { collection, contentId, threaded = true } = Astro.props;
+---
+
+<div class="article-comments">
+	<Comments collection={collection} contentId={contentId} threaded={threaded} />
+	<CommentForm collection={collection} contentId={contentId} />
+</div>
+
+<style>
+	.article-comments {
+		margin-top: var(--spacing-16);
+		padding-top: var(--spacing-10);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.article-comments :global(.ec-comments) {
+		--ec-comment-border: 1px solid var(--color-border);
+	}
+
+	.article-comments :global(.ec-comments-heading) {
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+		margin-bottom: var(--spacing-8);
+	}
+
+	.article-comments :global(.ec-comment-author) {
+		color: var(--color-text);
+	}
+
+	.article-comments :global(.ec-comment-date) {
+		font-family: var(--font-mono);
+		color: var(--color-muted);
+	}
+
+	.article-comments :global(.ec-comment-body) {
+		color: var(--color-text);
+	}
+
+	.article-comments :global(.ec-comment-form-field input),
+	.article-comments :global(.ec-comment-form-field textarea) {
+		background: var(--color-surface) !important;
+		border-color: var(--color-border) !important;
+		color: var(--color-text) !important;
+	}
+
+	.article-comments :global(.ec-comment-user-info) {
+		background: var(--color-surface) !important;
+		border-color: var(--color-border) !important;
+	}
+
+	.article-comments :global(.ec-comment-form-submit) {
+		background: var(--color-accent) !important;
+		color: var(--color-on-accent) !important;
+	}
+</style>

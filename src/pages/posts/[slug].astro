@@ -10,10 +10,9 @@ import {
 } from "emdash";
 import {
 	PortableText,
-	Comments,
-	CommentForm,
 	WidgetArea,
 } from "emdash/ui";
+import ArticleComments from "../../components/ArticleComments.astro";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import ImageRenderer from "../../components/ImageRenderer.astro";
@@ -167,10 +166,7 @@ const publishDate = formatDate(post.data.publishedAt);
 					<PortableText value={post.data.content} />
 				</div>
 
-				<div class="article-comments">
-					<Comments collection="posts" contentId={post.data.id} threaded />
-					<CommentForm collection="posts" contentId={post.data.id} />
-				</div>
+				<ArticleComments collection="posts" contentId={post.data.id} />
 			</div>
 
 			<ArticleSidebar />
@@ -599,53 +595,6 @@ const publishDate = formatDate(post.data.publishedAt);
 		background: var(--color-surface);
 		padding: var(--tag-padding-y) var(--spacing-2);
 		border-radius: var(--radius);
-	}
-
-	/* Comments section */
-	.article-comments {
-		margin-top: var(--spacing-16);
-		padding-top: var(--spacing-10);
-		border-top: 1px solid var(--color-border);
-	}
-
-	.article-comments :global(.ec-comments) {
-		--ec-comment-border: 1px solid var(--color-border);
-	}
-
-	.article-comments :global(.ec-comments-heading) {
-		font-size: var(--font-size-2xl);
-		font-weight: 600;
-		margin-bottom: var(--spacing-8);
-	}
-
-	.article-comments :global(.ec-comment-author) {
-		color: var(--color-text);
-	}
-
-	.article-comments :global(.ec-comment-date) {
-		font-family: var(--font-mono);
-		color: var(--color-muted);
-	}
-
-	.article-comments :global(.ec-comment-body) {
-		color: var(--color-text);
-	}
-
-	.article-comments :global(.ec-comment-form-field input),
-	.article-comments :global(.ec-comment-form-field textarea) {
-		background: var(--color-surface) !important;
-		border-color: var(--color-border) !important;
-		color: var(--color-text) !important;
-	}
-
-	.article-comments :global(.ec-comment-user-info) {
-		background: var(--color-surface) !important;
-		border-color: var(--color-border) !important;
-	}
-
-	.article-comments :global(.ec-comment-form-submit) {
-		background: var(--color-accent) !important;
-		color: var(--color-on-accent) !important;
 	}
 
 	/* Responsive */
