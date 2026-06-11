@@ -1,0 +1,168 @@
+---
+import { WidgetArea } from "emdash/ui";
+
+interface Page {
+	data: { slug?: string; title: string };
+	id: string;
+}
+
+interface MenuItem {
+	url: string;
+	target?: string;
+	label: string;
+}
+
+interface Menu {
+	items: MenuItem[];
+}
+
+interface Props {
+	siteTitle: string;
+	siteTagline: string;
+	siteLogo?: { url: string; alt?: string } | null;
+	pages: Page[];
+	socialMenu?: Menu | null;
+}
+
+const { siteTitle, siteTagline, siteLogo, pages, socialMenu } = Astro.props;
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-grid">
+			<div class="footer-brand">
+				<a href="/" class="footer-logo">
+					{
+						siteLogo
+							? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="footer-logo-img" />
+							: siteTitle
+					}
+				</a>
+				<p class="footer-tagline">{siteTagline}</p>
+			</div>
+			<div class="footer-nav">
+				<h4 class="footer-heading">导航</h4>
+				<ul class="footer-links">
+					<li><a href="/">首页</a></li>
+					<li><a href="/posts">全部文章</a></li>
+					{
+						pages.slice(0, 3).map((page) => (
+							<li>
+								<a href={`/pages/${page.data.slug || page.id}`}>
+									{page.data.title}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+			<div class="footer-nav">
+				<h4 class="footer-heading">连接</h4>
+				<ul class="footer-links">
+					{
+						socialMenu?.items.map((item) => (
+							<li>
+								<a
+									href={item.url}
+									target={item.target}
+									rel={
+										item.target === "_blank"
+											? "noopener noreferrer"
+											: undefined
+									}
+								>
+									{item.label}
+								</a>
+							</li>
+						))
+					}
+					<li><a href="/rss.xml">RSS 订阅</a></li>
+				</ul>
+			</div>
+			<div class="footer-widgets-section">
+				<WidgetArea name="footer" />
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p class="footer-copyright">
+				Powered by <a href="https://emdashcms.com">EmDash</a>
+			</p>
+			<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="footer-beian">湘ICP备20009092号</a>
+			<div class="theme-switcher">
+				<button
+					type="button"
+					class="theme-btn"
+					data-theme="light"
+					aria-label="Light mode"
+				>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><circle cx="12" cy="12" r="5"></circle><line
+							x1="12"
+							y1="1"
+							x2="12"
+							y2="3"></line><line x1="12" y1="21" x2="12" y2="23"
+						></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
+						></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"
+						></line><line x1="1" y1="12" x2="3" y2="12"></line><line
+							x1="21"
+							y1="12"
+							x2="23"
+							y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"
+						></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"
+						></line></svg
+					>
+				</button>
+				<button
+					type="button"
+					class="theme-btn"
+					data-theme="dark"
+					aria-label="Dark mode"
+				>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+						></path></svg
+					>
+				</button>
+				<button
+					type="button"
+					class="theme-btn"
+					data-theme="system"
+					aria-label="System theme"
+				>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><rect x="2" y="3" width="20" height="14" rx="2" ry="2"
+						></rect><line x1="8" y1="21" x2="16" y2="21"></line><line
+							x1="12"
+							y1="17"
+							x2="12"
+							y2="21"></line></svg
+					>
+				</button>
+			</div>
+		</div>
+	</div>
+</footer>
