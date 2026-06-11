@@ -54,7 +54,7 @@ const { items: results } = query
 								class="result-link"
 							>
 								<h2 class="result-title">
-									{result.title ?? "Untitled"}
+									{result.title ?? "无标题"}
 								</h2>
 								{result.snippet && (
 									<p class="result-snippet" set:html={result.snippet} />

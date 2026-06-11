@@ -7,7 +7,7 @@ import {
 import { Image } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
-import { getReadingTime } from "../utils/reading-time";
+import { getReadingTime, formatReadingTime } from "../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import ImageRenderer from "../components/ImageRenderer.astro";
 import { formatDate } from "../utils/date";
@@ -129,7 +129,7 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 									)}
 									<span class="meta-dot" />
 									<span>
-										{getReadingTime(featuredPost.data.content)} min read
+										{formatReadingTime(getReadingTime(featuredPost.data.content))}
 									</span>
 								</div>
 								<a
