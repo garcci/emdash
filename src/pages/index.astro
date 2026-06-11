@@ -12,6 +12,7 @@ import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import ImageRenderer from "../components/ImageRenderer.astro";
 import { formatDate } from "../utils/date";
 import { POSTS_PER_PAGE } from "../utils/constants";
+import { getMediaUrl } from "../utils/media";
 
 // Limit to what we render (1 featured + 6 grid). The DB does the slicing
 // instead of fetching every post and discarding the tail in JS.
@@ -103,7 +104,7 @@ const gridPostsWithTags = gridPosts.map((post) => ({
 														<span class="featured-byline">
 															{credit.byline.avatarMediaId && (
 																<img
-																	src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+																	src={getMediaUrl(credit.byline.avatarMediaId)}
 																	alt={credit.byline.displayName}
 																	class="featured-byline-avatar"
 																/>

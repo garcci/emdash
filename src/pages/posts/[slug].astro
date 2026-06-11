@@ -19,8 +19,9 @@ import PostCard from "../../components/PostCard.astro";
 import ImageRenderer from "../../components/ImageRenderer.astro";
 import { getReadingTime } from "../../utils/reading-time";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
-import { getAbsoluteImageUrl } from "../../utils/media";
+import { getAbsoluteImageUrl, getMediaUrl } from "../../utils/media";
 import { formatDate } from "../../utils/date";
+import { buildToc } from "../../utils/toc";
 
 const slug = decodeSlug(Astro.params.slug);
 
@@ -127,7 +128,7 @@ const publishDate = formatDate(post.data.publishedAt);
 										<div class="byline">
 											{credit.byline.avatarMediaId && (
 												<img
-													src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+													src={getMediaUrl(credit.byline.avatarMediaId)}
 													alt={credit.byline.displayName}
 													class="byline-avatar"
 												/>
@@ -266,66 +267,7 @@ const publishDate = formatDate(post.data.publishedAt);
 	}
 
 	<script>
-		// Build table of contents from h2/h3 headings
-		function buildToc() {
-			const content = document.querySelector(".article-content");
-			const tocContainer = document.getElementById("toc-content");
-			if (!content || !tocContainer) return;
-
-			const headings = content.querySelectorAll("h2, h3");
-			if (headings.length === 0) {
-				// Hide TOC if no headings
-				const toc = document.querySelector(".toc") as HTMLElement | null;
-				if (toc) toc.style.display = "none";
-				return;
-			}
-
-			const list = document.createElement("ul");
-			list.className = "toc-list";
-
-			headings.forEach((heading, index) => {
-				// Add ID if missing
-				if (!heading.id) {
-					heading.id = `heading-${index}`;
-				}
-
-				const li = document.createElement("li");
-				li.className =
-					heading.tagName === "H3" ? "toc-item toc-item--nested" : "toc-item";
-
-				const link = document.createElement("a");
-				link.href = `#${heading.id}`;
-				link.className = "toc-link";
-				link.textContent = heading.textContent;
-
-				li.appendChild(link);
-				list.appendChild(li);
-			});
-
-			tocContainer.appendChild(list);
-
-			// Highlight current section on scroll
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						const id = entry.target.id;
-						const link = tocContainer.querySelector(`a[href="#${id}"]`);
-						if (link) {
-							if (entry.isIntersecting) {
-								tocContainer
-									.querySelectorAll(".toc-link")
-									.forEach((l) => l.classList.remove("active"));
-								link.classList.add("active");
-							}
-						}
-					});
-				},
-				{ rootMargin: "-80px 0px -80% 0px" }
-			);
-
-			headings.forEach((heading) => observer.observe(heading));
-		}
-
+		import { buildToc } from "../../utils/toc";
 		buildToc();
 	</script>
 </Base>

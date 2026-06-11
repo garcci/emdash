@@ -2,6 +2,7 @@
 import type { MediaValue, ContentBylineCredit } from "emdash";
 import ImageRenderer from "./ImageRenderer.astro";
 import { formatDate } from "../utils/date";
+import { getMediaUrl } from "../utils/media";
 
 interface Props {
 	title: string;
@@ -54,7 +55,7 @@ const formattedDate = formatDate(date, { month: "short" });
 									<span class="card-byline">
 										{credit.byline.avatarMediaId && (
 											<img
-												src={`/_emdash/api/media/file/${credit.byline.avatarMediaId}`}
+												src={getMediaUrl(credit.byline.avatarMediaId)}
 												alt={credit.byline.displayName}
 												class="card-byline-avatar"
 											/>

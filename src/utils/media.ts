@@ -1,4 +1,11 @@
 /**
+ * Build a media file URL from a storage key.
+ */
+export function getMediaUrl(storageKey: string): string {
+	return `/_emdash/api/media/file/${storageKey}`;
+}
+
+/**
  * Resolve a featured_image value to a displayable image URL.
  * Handles both local (provider: "local") and external (provider: "external-url") images.
  */
