@@ -6,13 +6,12 @@ import { resolveImageUrl, isExternalImage } from "../utils/media";
 interface Props {
 	image: MediaValue | undefined;
 	alt?: string;
-	class?: string;
+	className?: string;
 	width?: number;
 	height?: number;
 }
 
-const { image, alt, width, height } = Astro.props;
-const imgClass = Astro.props.class;
+const { image, alt, className, width, height } = Astro.props;
 
 const isExternal = isExternalImage(image);
 const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
@@ -24,12 +23,12 @@ const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
 			<img
 				src={imgUrl}
 				alt={alt || ""}
-				class={imgClass}
+				class={className}
 				width={width}
 				height={height}
 			/>
 		) : (
-			<EmDashImage image={image} class={imgClass} />
+			<EmDashImage image={image} class={className} />
 		)
 	)
 }
