@@ -1,0 +1,61 @@
+---
+import { getMediaUrl } from "../../utils/media";
+import type { ContentBylineCredit } from "emdash";
+
+interface Props {
+	credits: ContentBylineCredit[];
+}
+
+const { credits } = Astro.props;
+---
+
+{
+	credits.map((credit) => (
+		<div class="byline">
+			{credit.byline.avatarMediaId && (
+				<img
+					src={getMediaUrl(credit.byline.avatarMediaId)}
+					alt={credit.byline.displayName}
+					class="byline-avatar"
+				/>
+			)}
+			<div class="byline-info">
+				<span class="byline-name">{credit.byline.displayName}</span>
+				{credit.roleLabel && (
+					<span class="byline-role">{credit.roleLabel}</span>
+				)}
+			</div>
+		</div>
+	))
+}
+
+<style>
+	.byline {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-2);
+	}
+
+	.byline-avatar {
+		width: var(--avatar-size-lg);
+		height: var(--avatar-size-lg);
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.byline-info {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.byline-name {
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+		color: var(--color-text);
+	}
+
+	.byline-role {
+		font-size: var(--font-size-xs);
+		color: var(--color-muted);
+	}
+</style>
