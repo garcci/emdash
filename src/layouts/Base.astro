@@ -333,7 +333,7 @@ const isLoggedIn = !!Astro.locals.user;
 
 				::selection {
 					background: var(--color-accent);
-					color: white;
+					color: var(--color-on-accent);
 				}
 
 				/* Meta dot — small separator used in post listings and cards */
@@ -359,6 +359,72 @@ const isLoggedIn = !!Astro.locals.user;
 				.tag-pill:hover {
 					color: var(--color-text);
 					background: var(--color-border);
+				}
+
+				/* Link underline on hover */
+				a:where(:not([class*="emdash"]):not([class*="ec-"])):hover {
+					text-decoration: underline;
+					text-underline-offset: 3px;
+					text-decoration-thickness: 1.5px;
+				}
+
+				/* Blockquote styling */
+				blockquote {
+					border-left: 3px solid var(--color-accent);
+					padding-left: var(--spacing-6);
+					margin-left: 0;
+					margin-right: 0;
+					color: var(--color-text-secondary);
+					font-style: italic;
+				}
+
+				/* Code block styling */
+				pre {
+					border-radius: var(--radius-lg);
+					background: var(--color-bg-subtle);
+					padding: var(--spacing-4);
+					overflow-x: auto;
+					font-family: var(--font-mono);
+					font-size: var(--font-size-sm);
+					line-height: var(--leading-snug);
+				}
+
+				pre code {
+					background: transparent;
+					padding: 0;
+				}
+
+				code {
+					font-family: var(--font-mono);
+					background: var(--color-bg-subtle);
+					padding: 0.125rem 0.375rem;
+					border-radius: var(--radius);
+					font-size: 0.9em;
+				}
+
+				/* Article content images */
+				.article-content img {
+					border-radius: var(--radius-lg);
+					box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+				}
+
+				/* Scrollbar styling */
+				::-webkit-scrollbar {
+					width: 8px;
+					height: 8px;
+				}
+
+				::-webkit-scrollbar-track {
+					background: var(--color-bg-subtle);
+				}
+
+				::-webkit-scrollbar-thumb {
+					background: var(--color-border);
+					border-radius: 4px;
+				}
+
+				::-webkit-scrollbar-thumb:hover {
+					background: var(--color-muted);
 				}
 			}
 		</style>
