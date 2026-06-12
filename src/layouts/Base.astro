@@ -124,7 +124,7 @@ if (themeCookie === "dark") {
 			socialMenu={socialMenu}
 		/>
 
-		<div class="reading-progress" aria-hidden="true"></div>
+		<div class="reading-progress" role="progressbar" aria-label="阅读进度" aria-hidden="true"></div>
 		<button class="back-to-top" aria-label="回到顶部" type="button">
 			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 		</button>
@@ -559,7 +559,7 @@ if (themeCookie === "dark") {
 				width: 44px;
 				height: 44px;
 				border-radius: 50%;
-				background: rgba(var(--color-bg-rgb), 0.8);
+				background: color-mix(in srgb, var(--color-bg) 80%, transparent);
 				backdrop-filter: blur(12px);
 				-webkit-backdrop-filter: blur(12px);
 				border: 1px solid var(--color-border-subtle);
@@ -585,14 +585,16 @@ if (themeCookie === "dark") {
 				transform: translateY(0);
 				pointer-events: auto;
 			}
-
-			.back-to-top:hover {
+			
+			.back-to-top:hover,
+			.back-to-top:focus-visible {
 				color: var(--color-accent);
 				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 				transform: translateY(-2px);
 			}
-
-			.back-to-top.visible:hover {
+			
+			.back-to-top.visible:hover,
+			.back-to-top.visible:focus-visible {
 				transform: translateY(-2px);
 			}
 
@@ -608,6 +610,22 @@ if (themeCookie === "dark") {
 			.reveal.revealed {
 				opacity: 1;
 				transform: translateY(0);
+			}
+
+			/* Ensure content is visible when JS is disabled or motion is reduced */
+			@media (prefers-reduced-motion: reduce) {
+				.reveal {
+					opacity: 1;
+					transform: none;
+					transition: none;
+				}
+			}
+
+			@media (scripting: none) {
+				.reveal {
+					opacity: 1;
+					transform: none;
+				}
 			}
 		</style>
 

@@ -37,16 +37,6 @@ const { value, className = "" } = Astro.props;
 		scroll-margin-top: calc(var(--nav-height) + var(--spacing-4));
 	}
 
-	.prose :global(blockquote) {
-		margin: 2em 0;
-		padding: var(--spacing-4) var(--spacing-6);
-		border-left: 3px solid var(--color-accent);
-		background: var(--color-bg-subtle);
-		border-radius: 0 var(--radius) var(--radius) 0;
-		color: var(--color-text-secondary);
-		font-style: italic;
-	}
-
 	.prose :global(pre) {
 		margin: 2em 0;
 		padding: var(--spacing-5);

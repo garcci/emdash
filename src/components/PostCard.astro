@@ -73,10 +73,6 @@ const formattedDate = formatDate(date, { month: "short" });
 											.slice(1)
 											.map((c) => c.byline.displayName)
 											.join(", ")}
-										title={bylines
-											.slice(1)
-											.map((c) => c.byline.displayName)
-											.join(", ")}
 										tabindex="0"
 									>
 										+{bylines.length - 1}
@@ -137,7 +133,7 @@ const formattedDate = formatDate(date, { month: "short" });
 		height: 100%;
 		object-fit: cover;
 		transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-		will-change: transform;
+		will-change: filter;
 	}
 
 	.post-card:hover .card-image {
