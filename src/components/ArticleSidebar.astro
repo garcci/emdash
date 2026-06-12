@@ -1,15 +1,29 @@
 ---
 import { WidgetArea } from "emdash/ui";
+
+interface Props {
+	tocHeadings?: Array<{ level: number; text: string; id: string }>;
+}
+
+const { tocHeadings = [] } = Astro.props;
 ---
 
 <aside class="article-sidebar">
 	<div class="sidebar-sticky">
-		<nav class="toc" aria-label="Table of contents">
-			<h4 class="toc-title">本页目录</h4>
-			<div class="toc-content" id="toc-content">
-				<!-- Populated by JS -->
-			</div>
-		</nav>
+		{tocHeadings.length > 0 && (
+			<nav class="toc" aria-label="Table of contents">
+				<h4 class="toc-title">本页目录</h4>
+				<div class="toc-content" id="toc-content">
+					<ul class="toc-list">
+						{tocHeadings.map((heading) => (
+							<li class={`toc-item ${heading.level === 3 ? "toc-item--nested" : ""}`}>
+								<a href={`#${heading.id}`} class="toc-link">{heading.text}</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</nav>
+		)}
 		<div class="sidebar-widgets">
 			<WidgetArea name="sidebar" />
 		</div>

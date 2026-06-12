@@ -82,6 +82,23 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 	readingTime: getReadingTime(p.data.content),
 }));
 
+// Extract headings from Portable Text for server-side TOC rendering
+function extractPortableTextText(block: any): string {
+	if (!block.children || !Array.isArray(block.children)) return "";
+	return block.children.map((child: any) => child.text || "").join("");
+}
+
+const tocHeadings = ((post.data.content || []) as any[])
+	.filter((block) => block._type === "block" && ["h2", "h3"].includes(block.style))
+	.map((block, index) => {
+		const text = extractPortableTextText(block);
+		return {
+			level: block.style === "h3" ? 3 : 2,
+			text,
+			id: `heading-${index}`,
+		};
+	});
+
 const publishDate = formatDate(post.data.publishedAt);
 ---
 
@@ -131,7 +148,7 @@ const publishDate = formatDate(post.data.publishedAt);
 				<ArticleComments collection="posts" contentId={post.data.id} />
 			</div>
 
-			<ArticleSidebar />
+			<ArticleSidebar tocHeadings={tocHeadings} />
 		</div>
 	</article>
 
@@ -150,28 +167,12 @@ const publishDate = formatDate(post.data.publishedAt);
 				return;
 			}
 
-			const list = document.createElement("ul");
-			list.className = "toc-list";
-
+			// Ensure each heading has an ID matching the server-rendered TOC
 			headings.forEach((heading, index) => {
 				if (!heading.id) {
 					heading.id = `heading-${index}`;
 				}
-
-				const li = document.createElement("li");
-				li.className =
-					heading.tagName === "H3" ? "toc-item toc-item--nested" : "toc-item";
-
-				const link = document.createElement("a");
-				link.href = `#${heading.id}`;
-				link.className = "toc-link";
-				link.textContent = heading.textContent;
-
-				li.appendChild(link);
-				list.appendChild(li);
 			});
-
-			tocContainer.appendChild(list);
 
 			let activeLink = null;
 			let rafId = null;
