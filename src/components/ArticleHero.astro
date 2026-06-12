@@ -18,6 +18,7 @@ const { image, title, edit } = Astro.props;
 				alt={title || ""}
 				width={image?.width}
 				height={image?.height}
+				loading="eager"
 			/>
 		</div>
 	)

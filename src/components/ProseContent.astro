@@ -9,7 +9,7 @@ interface Props {
 const { value, className = "" } = Astro.props;
 ---
 
-<div class={`prose ${className}`}>
+<div class={`prose ${className}`} aria-label="文章内容">
 	<PortableText value={value} />
 </div>
 

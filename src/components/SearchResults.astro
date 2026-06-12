@@ -13,11 +13,11 @@ interface Props {
 const { results } = Astro.props;
 ---
 
-<ol class="search-results">
+<ol class="search-results" aria-label="搜索结果">
 	{
 		results.map((result) => (
 			<li class="search-result">
-				<a href={`/posts/${result.slug ?? result.id}`} class="result-link">
+				<a href={`/posts/${result.slug ?? result.id}`} class="result-link" aria-label={result.title ?? "无标题"}>
 					<h2 class="result-title">{result.title ?? "无标题"}</h2>
 					{result.snippet && (
 						<p class="result-snippet" set:html={result.snippet} />

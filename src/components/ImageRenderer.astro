@@ -31,7 +31,7 @@ const imgUrl = isExternal ? resolveImageUrl(image) : undefined;
 				decoding="async"
 			/>
 		) : (
-			<EmDashImage image={image} class={className} />
+			<EmDashImage image={image} class={className} loading={loading} />
 		)
 	)
 }

@@ -9,7 +9,7 @@ interface Props {
 const { title, description, actionText, actionHref } = Astro.props;
 ---
 
-<section class="empty-state">
+<section class="empty-state" aria-live="polite">
 	<h2>{title}</h2>
 	<p>{description}</p>
 	{

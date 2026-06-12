@@ -10,7 +10,7 @@ interface Props {
 const { collection, contentId, threaded = true } = Astro.props;
 ---
 
-<div class="article-comments">
+<div class="article-comments" aria-label="评论区">
 	<Comments collection={collection} contentId={contentId} threaded={threaded} />
 	<CommentForm collection={collection} contentId={contentId} />
 </div>

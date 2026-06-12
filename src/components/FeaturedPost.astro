@@ -61,17 +61,17 @@ const publishedAt = post.data.publishedAt;
 									</>
 								))}
 								{bylines.length > 2 && (
-									<span class="byline-more">
+									<span class="byline-more" aria-label={`还有 ${bylines.length - 2} 位作者`}>
 										+{bylines.length - 2}
 									</span>
 								)}
 							</div>
-							<span class="meta-dot" />
+							<span class="meta-dot" aria-hidden="true" />
 						</>
 					)
 				}
 				{publishedAt && <time>{formatDate(publishedAt)}</time>}
-				<span class="meta-dot" />
+				<span class="meta-dot" aria-hidden="true" />
 				<span>{formatReadingTime(getReadingTime(post.data.content))}</span>
 			</div>
 			<a href={`/posts/${post.id}`} class="featured-title-link">

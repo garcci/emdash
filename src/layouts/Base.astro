@@ -112,7 +112,7 @@ if (themeCookie === "dark") {
 			isLoggedIn={isLoggedIn}
 		/>
 
-		<main>
+		<main id="main-content">
 			<slot />
 		</main>
 
@@ -124,8 +124,8 @@ if (themeCookie === "dark") {
 			socialMenu={socialMenu}
 		/>
 
-		<div class="reading-progress" role="progressbar" aria-label="阅读进度" aria-hidden="true"></div>
-		<button class="back-to-top" aria-label="回到顶部" type="button">
+		<div class="reading-progress" role="progressbar" aria-label="阅读进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+		<button class="back-to-top" aria-label="回到顶部" type="button" tabindex="-1">
 			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
 		</button>
 
@@ -589,10 +589,10 @@ if (themeCookie === "dark") {
 			.back-to-top:hover,
 			.back-to-top:focus-visible {
 				color: var(--color-accent);
-				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 				transform: translateY(-2px);
 			}
-			
+
 			.back-to-top.visible:hover,
 			.back-to-top.visible:focus-visible {
 				transform: translateY(-2px);
@@ -641,29 +641,45 @@ if (themeCookie === "dark") {
 				const progressBar = document.querySelector('.reading-progress');
 				const backToTop = document.querySelector('.back-to-top');
 
+				let ticking = false;
 				function updateProgress() {
 					const scrollTop = window.scrollY || document.documentElement.scrollTop;
 					const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 					const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 					if (progressBar) {
 						progressBar.style.width = progress + '%';
+						progressBar.setAttribute('aria-valuenow', Math.round(progress));
 					}
 					if (backToTop) {
 						if (scrollTop > 400) {
 							backToTop.classList.add('visible');
+							backToTop.setAttribute('tabindex', '0');
 						} else {
 							backToTop.classList.remove('visible');
+							backToTop.setAttribute('tabindex', '-1');
 						}
 					}
+					ticking = false;
 				}
 
-				window.addEventListener('scroll', updateProgress, { passive: true });
+				window.addEventListener('scroll', function() {
+					if (!ticking) {
+						requestAnimationFrame(updateProgress);
+						ticking = true;
+					}
+				}, { passive: true });
 				updateProgress();
 
 				// Back to top
 				if (backToTop) {
 					backToTop.addEventListener('click', function() {
 						window.scrollTo({ top: 0, behavior: 'smooth' });
+						// Move focus to main content for screen readers and keyboard users
+						const main = document.querySelector('main');
+						if (main) {
+							main.setAttribute('tabindex', '-1');
+							main.focus({ preventScroll: true });
+						}
 					});
 				}
 

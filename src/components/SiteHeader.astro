@@ -15,10 +15,12 @@ interface Props {
 }
 
 const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
+// Get current path for aria-current
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
-	<nav class="nav">
+	<nav class="nav" aria-label="主导航">
 		<a href="/" class="site-title">
 			{
 				siteLogo
@@ -38,7 +40,12 @@ const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
 			<div class="nav-links">
 				{
 					menuItems.map((item) => (
-						<a href={item.url} target={item.target}>
+						<a 
+							href={item.url} 
+							target={item.target}
+							aria-current={currentPath === item.url || (item.url !== '/' && currentPath.startsWith(item.url)) ? 'page' : undefined}
+							aria-label={item.label}
+						>
 							{item.label}
 						</a>
 					))
