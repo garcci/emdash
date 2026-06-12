@@ -129,7 +129,7 @@ const publishedAt = post.data.publishedAt;
 		height: auto;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
-		transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 		will-change: transform;
 	}
 
@@ -140,7 +140,7 @@ const publishedAt = post.data.publishedAt;
 
 	.featured-image-link:hover .featured-image img,
 	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.03);
+		filter: brightness(1.03);
 	}
 
 	.featured-content {

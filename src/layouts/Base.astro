@@ -419,15 +419,59 @@ const isLoggedIn = !!Astro.locals.user;
 
 				/* Blockquote styling */
 				blockquote {
-					border-left: 3px solid var(--color-accent);
-					padding-left: var(--spacing-6);
+					position: relative;
+					border-left: none;
+					padding: var(--spacing-6) var(--spacing-8);
+					margin: var(--spacing-8) 0;
 					margin-left: 0;
 					margin-right: 0;
 					color: var(--color-text-secondary);
 					font-style: italic;
+					background: var(--color-bg-subtle);
+					border-radius: var(--radius-lg);
 				}
 
-				/* Code block styling */
+				blockquote::before {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: var(--spacing-6);
+					bottom: var(--spacing-6);
+					width: 3px;
+					background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-hover));
+					border-radius: var(--radius);
+				}
+
+				blockquote p {
+					margin: 0;
+					font-size: var(--font-size-lg);
+					line-height: var(--leading-relaxed);
+				}
+
+				blockquote p + p {
+					margin-top: var(--spacing-3);
+				}
+
+				/* Horizontal rule */
+				hr {
+					border: none;
+					height: 1px;
+					background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+					margin: var(--spacing-12) 0;
+				}
+
+				/* Focus states */
+				:focus-visible {
+					outline: 2px solid var(--color-accent);
+					outline-offset: 2px;
+					border-radius: var(--radius);
+				}
+
+				/* Selection */
+				::selection {
+					background: var(--color-accent);
+					color: var(--color-on-accent);
+				}
 				pre {
 					border-radius: var(--radius-lg);
 					background: var(--color-bg-subtle);
