@@ -46,4 +46,9 @@ const { tags, class: className } = Astro.props;
     background: var(--color-border);
     transform: scale(1.08);
   }
+
+  .tag:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 </style>

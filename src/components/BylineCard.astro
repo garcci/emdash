@@ -17,6 +17,7 @@ const { credits } = Astro.props;
 					src={getMediaUrl(credit.byline.avatarMediaId)}
 					alt={credit.byline.displayName}
 					class="byline-avatar"
+					loading="lazy"
 				/>
 			)}
 			<div class="byline-info">

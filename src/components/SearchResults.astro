@@ -64,8 +64,15 @@ const { results } = Astro.props;
 		transition: color var(--transition-fast);
 	}
 
-	.result-link:hover .result-title {
+	.result-link:hover .result-title,
+	.result-link:focus-visible .result-title {
 		color: var(--color-accent);
+	}
+
+	.result-link:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-radius: var(--radius);
 	}
 
 	.result-snippet {
@@ -76,7 +83,7 @@ const { results } = Astro.props;
 
 	/* FTS returns <mark> wrapping the matched terms */
 	.result-snippet :global(mark) {
-		background: var(--color-accent-ring, rgba(99, 102, 241, 0.2));
+		background: var(--color-accent-ring);
 		color: inherit;
 		padding: 0 0.1em;
 		border-radius: 2px;

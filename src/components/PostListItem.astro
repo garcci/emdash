@@ -79,6 +79,17 @@ const { post, tags, bylines } = Astro.props;
 	.post-item {
 		padding: var(--spacing-8) 0;
 		border-bottom: 1px solid var(--color-border-subtle);
+		transition: background-color var(--transition-fast);
+	}
+
+	@media (hover: hover) {
+		.post-item:hover {
+			background-color: var(--color-bg-subtle);
+		}
+
+		.post-item:first-child:hover {
+			background-color: transparent;
+		}
 	}
 
 	.post-item:first-child {

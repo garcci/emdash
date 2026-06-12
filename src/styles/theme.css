@@ -30,6 +30,13 @@
 	--color-accent-ring: color-mix(in srgb, var(--color-accent) 25%, transparent);
 	*/
 
+	/* --- Glassmorphism ---
+	--glass-bg: color-mix(in srgb, var(--color-bg) 68%, transparent);
+	--glass-blur: blur(24px) saturate(1.6);
+	--glass-border: color-mix(in srgb, var(--color-border) 35%, transparent);
+	--glass-highlight: color-mix(in srgb, var(--color-text) 4%, transparent);
+	*/
+
 	/* --- Type scale ---
 	--font-size-xs: 0.8125rem;
 	--font-size-sm: 0.875rem;
@@ -100,6 +107,14 @@
 	/* --- Shadows ---
 	--shadow-dropdown: 0 8px 30px rgba(0, 0, 0, 0.12);
 	--shadow-btn-active: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+	--shadow-card-hover: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.08), 0 12px 40px rgba(0, 0, 0, 0.12);
+	--shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.06), 0 12px 48px rgba(0, 0, 0, 0.03);
+	--shadow-glass-hover: 0 8px 32px rgba(0, 0, 0, 0.1), 0 16px 64px rgba(0, 0, 0, 0.05);
+	--shadow-image: 0 4px 20px rgba(0, 0, 0, 0.08);
+	--shadow-image-dark: 0 4px 24px rgba(0, 0, 0, 0.4);
+	--shadow-btn-hover: 0 4px 12px -2px rgba(0, 0, 0, 0.15);
+	--shadow-back-to-top-hover: 0 6px 24px rgba(0, 0, 0, 0.12);
 	*/
 
 	/* --- Misc ---

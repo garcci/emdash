@@ -30,6 +30,12 @@ const { title, description, edit } = Astro.props;
 		animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		.page-header {
+			animation: none;
+		}
+	}
+
 	.page-title {
 		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
 		font-weight: 700;

@@ -177,6 +177,20 @@ const publishDate = formatDate(post.data.publishedAt);
 			let activeLink = null;
 			let rafId = null;
 
+			// Smooth scroll for TOC links
+			document.querySelectorAll('.toc-link').forEach(link => {
+				link.addEventListener('click', (e) => {
+					e.preventDefault();
+					const targetId = link.getAttribute('href');
+					const target = document.querySelector(targetId);
+					if (target) {
+						target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						// Update URL hash without jumping or adding history entry
+						history.replaceState(null, '', targetId);
+					}
+				});
+			});
+
 			const observer = new IntersectionObserver(
 				(entries) => {
 					if (rafId) return;
@@ -237,7 +251,7 @@ const publishDate = formatDate(post.data.publishedAt);
 		gap: var(--spacing-12);
 		justify-content: center;
 		padding: 0 var(--spacing-6);
-		margin: var(--spacing-20) 0;
+		margin: var(--spacing-12) 0 var(--spacing-20);
 	}
 
 	/* Main content column */
