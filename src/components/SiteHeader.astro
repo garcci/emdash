@@ -168,11 +168,12 @@ const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
 		color: var(--color-text);
 		transition:
 			border-color var(--transition-fast),
-			box-shadow var(--transition-fast);
+			box-shadow var(--transition-fast),
+			background var(--transition-fast);
 	}
 
-	.site-search-input::placeholder {
-		color: var(--color-muted);
+	.site-search-input:hover {
+		background: var(--color-bg-subtle);
 	}
 
 	.site-search-input:focus,
@@ -180,6 +181,7 @@ const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
 		outline: none;
 		border-color: var(--color-accent) !important;
 		box-shadow: 0 0 0 3px var(--color-accent-ring);
+		background: var(--color-bg);
 	}
 
 	.site-search-results {
