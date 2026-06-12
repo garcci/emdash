@@ -115,6 +115,11 @@ const isLoggedIn = !!Astro.locals.user;
 			socialMenu={socialMenu}
 		/>
 
+		<div class="reading-progress" aria-hidden="true"></div>
+		<button class="back-to-top" aria-label="回到顶部" type="button">
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+		</button>
+
 
 
 		<style is:global>
@@ -384,7 +389,7 @@ const isLoggedIn = !!Astro.locals.user;
 				.tag-pill:hover {
 					color: var(--color-text);
 					background: var(--color-border);
-					transform: scale(1.05);
+					transform: scale(1.08);
 				}
 
 				/* Link underline on hover */
@@ -463,6 +468,75 @@ const isLoggedIn = !!Astro.locals.user;
 					background: var(--color-muted);
 				}
 			}
+
+			/* Reading progress bar */
+			.reading-progress {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 3px;
+				width: 0;
+				background: var(--color-accent);
+				z-index: 9999;
+				transition: width 0.1s linear;
+			}
+
+			/* Back to top button */
+			.back-to-top {
+				position: fixed;
+				bottom: var(--spacing-6);
+				right: var(--spacing-6);
+				width: 44px;
+				height: 44px;
+				border-radius: 50%;
+				background: var(--color-bg);
+				border: 1px solid var(--color-border);
+				color: var(--color-text-secondary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				z-index: 100;
+				opacity: 0;
+				transform: translateY(20px);
+				pointer-events: none;
+				transition:
+					opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+					transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+					box-shadow 0.3s ease,
+					color var(--transition-fast);
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+			}
+
+			.back-to-top.visible {
+				opacity: 1;
+				transform: translateY(0);
+				pointer-events: auto;
+			}
+
+			.back-to-top:hover {
+				color: var(--color-accent);
+				box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+				transform: translateY(-2px);
+			}
+
+			.back-to-top.visible:hover {
+				transform: translateY(-2px);
+			}
+
+			/* Scroll reveal */
+			.reveal {
+				opacity: 0;
+				transform: translateY(24px);
+				transition:
+					opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+					transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+			}
+
+			.reveal.revealed {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		</style>
 
 		<style>
@@ -472,6 +546,55 @@ const isLoggedIn = !!Astro.locals.user;
 		</style>
 
 		<script is:inline>
+			(function() {
+				// Reading progress bar
+				const progressBar = document.querySelector('.reading-progress');
+				const backToTop = document.querySelector('.back-to-top');
+
+				function updateProgress() {
+					const scrollTop = window.scrollY || document.documentElement.scrollTop;
+					const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+					if (progressBar) {
+						progressBar.style.width = progress + '%';
+					}
+					if (backToTop) {
+						if (scrollTop > 400) {
+							backToTop.classList.add('visible');
+						} else {
+							backToTop.classList.remove('visible');
+						}
+					}
+				}
+
+				window.addEventListener('scroll', updateProgress, { passive: true });
+				updateProgress();
+
+				// Back to top
+				if (backToTop) {
+					backToTop.addEventListener('click', function() {
+						window.scrollTo({ top: 0, behavior: 'smooth' });
+					});
+				}
+
+				// Scroll reveal
+				const revealObserver = new IntersectionObserver(function(entries) {
+					entries.forEach(function(entry) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('revealed');
+							revealObserver.unobserve(entry.target);
+						}
+					});
+				}, {
+					rootMargin: '0px 0px -60px 0px',
+					threshold: 0.1
+				});
+
+				document.querySelectorAll('.reveal').forEach(function(el) {
+					revealObserver.observe(el);
+				});
+			})();
+
 			document.addEventListener("keydown", (e) => {
 				if ((e.metaKey || e.ctrlKey) && e.key === "k") {
 					e.preventDefault();

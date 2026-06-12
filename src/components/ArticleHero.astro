@@ -12,7 +12,7 @@ const { image, title, edit } = Astro.props;
 
 {
 	image && (
-		<div class="article-hero" {...edit}>
+		<div class="article-hero reveal" {...edit}>
 			<ImageRenderer
 				image={image}
 				alt={title || ""}

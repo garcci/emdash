@@ -25,7 +25,7 @@ const { post, tags, bylines } = Astro.props;
 const publishedAt = post.data.publishedAt;
 ---
 
-<section class="featured-section">
+<section class="featured-section reveal">
 	<div class="featured-grid">
 		<a href={`/posts/${post.id}`} class="featured-image-link">
 			<div class="featured-image">
@@ -140,7 +140,7 @@ const publishedAt = post.data.publishedAt;
 
 	.featured-image-link:hover .featured-image img,
 	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.04);
+		transform: scale(1.06);
 	}
 
 	.featured-content {
