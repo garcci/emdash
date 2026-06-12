@@ -9,7 +9,6 @@ import { createPublicPageContext } from "emdash/page";
 import { Font } from "astro:assets";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 import ThemeScript from "../components/layout/ThemeScript.astro";
-import { ViewTransitions } from 'astro:transitions';
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import "../styles/theme.css";
@@ -94,7 +93,6 @@ const isLoggedIn = !!Astro.locals.user;
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
 		<ThemeScript />
-		<ViewTransitions />
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
