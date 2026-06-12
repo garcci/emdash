@@ -70,6 +70,12 @@ import { WidgetArea } from "emdash/ui";
 		color: var(--color-text);
 	}
 
+	.toc-content :global(.toc-link.active) {
+		font-weight: 500;
+		background: var(--color-surface);
+		border-radius: var(--radius);
+	}
+
 	/* Sidebar widgets */
 	.sidebar-widgets :global(.widget-area) {
 		display: flex;
