@@ -75,13 +75,15 @@ const { tocHeadings = [] } = Astro.props;
 		color: var(--color-muted);
 		text-decoration: none;
 		padding: var(--spacing-1) 0;
-		transition: color var(--transition-fast);
+		transition:
+			color var(--transition-fast),
+			transform var(--transition-fast);
 		line-height: var(--leading-snug);
 	}
 
-	.toc-content :global(.toc-link:hover),
-	.toc-content :global(.toc-link.active) {
+	.toc-content :global(.toc-link:hover) {
 		color: var(--color-text);
+		transform: translateX(2px);
 	}
 
 	.toc-content :global(.toc-link.active) {

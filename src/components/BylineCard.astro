@@ -41,6 +41,11 @@ const { credits } = Astro.props;
 		height: var(--avatar-size-lg);
 		border-radius: 50%;
 		object-fit: cover;
+		transition: transform var(--transition-fast);
+	}
+
+	.byline:hover .byline-avatar {
+		transform: scale(1.05);
 	}
 
 	.byline-info {

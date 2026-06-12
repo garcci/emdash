@@ -235,11 +235,15 @@ const { siteTitle, siteTagline, siteLogo, pages, socialMenu } = Astro.props;
 		color: var(--color-text-secondary);
 		text-decoration: none;
 		font-size: var(--font-size-sm);
-		transition: color var(--transition-fast);
+		transition:
+			color var(--transition-fast),
+			transform var(--transition-fast);
+		display: inline-block;
 	}
 
 	.footer-links a:hover {
 		color: var(--color-text);
+		transform: translateX(2px);
 	}
 
 	.footer-widgets-section :global(.widget-area) {

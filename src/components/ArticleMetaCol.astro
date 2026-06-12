@@ -100,12 +100,14 @@ const { bylines, publishDate, readingTime, tags } = Astro.props;
 		text-decoration: none;
 		transition:
 			color var(--transition-fast),
-			background var(--transition-fast);
+			background var(--transition-fast),
+			transform var(--transition-fast);
 	}
 
 	.meta-tag:hover {
 		color: var(--color-text);
 		background: var(--color-border);
+		transform: translateX(2px);
 	}
 
 	.bylines {

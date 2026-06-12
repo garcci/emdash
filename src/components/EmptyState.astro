@@ -50,10 +50,17 @@ const { title, description, actionText, actionHref } = Astro.props;
 		border-radius: var(--radius);
 		font-size: var(--font-size-sm);
 		font-weight: 500;
-		transition: background var(--transition-fast);
+		transition:
+			background var(--transition-fast),
+			transform var(--transition-fast);
 	}
 
 	.btn:hover {
 		background: var(--color-accent-hover);
+		transform: translateY(-1px);
+	}
+
+	.btn:active {
+		transform: translateY(0);
 	}
 </style>

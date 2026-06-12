@@ -146,11 +146,14 @@ const { post, tags, bylines } = Astro.props;
 		line-height: var(--leading-snug);
 		letter-spacing: var(--tracking-snug);
 		margin-bottom: var(--spacing-2);
-		transition: color var(--transition-fast);
+		transition:
+			color var(--transition-fast),
+			transform var(--transition-fast);
 	}
 
 	.post-link:hover .post-title {
 		color: var(--color-accent);
+		transform: translateX(2px);
 	}
 
 	.post-excerpt {

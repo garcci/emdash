@@ -11,9 +11,15 @@ import Base from "../layouts/Base.astro";
 </Base>
 
 <style>
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
 	.not-found {
 		text-align: center;
 		padding: var(--spacing-24) var(--spacing-6);
+		animation: fadeIn 0.5s ease-out;
 	}
 
 	.not-found h1 {
