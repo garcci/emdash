@@ -189,21 +189,21 @@ const isLoggedIn = !!Astro.locals.user;
 					--emdash-search-highlight: var(--color-text);
 
 					/* Type scale - more refined */
-					--font-size-xs: 0.8125rem;
-					--font-size-sm: 0.875rem;
-					--font-size-base: 1rem;
-					--font-size-lg: 1.125rem;
+					--font-size-xs: 0.75rem;
+					--font-size-sm: 0.8125rem;
+					--font-size-base: 0.9375rem;
+					--font-size-lg: 1.0625rem;
 					--font-size-xl: 1.25rem;
-					--font-size-2xl: 1.5rem;
-					--font-size-3xl: 2rem;
-					--font-size-4xl: 2.5rem;
-					--font-size-5xl: 3.5rem;
+					--font-size-2xl: 1.75rem;
+					--font-size-3xl: 2.25rem;
+					--font-size-4xl: 3rem;
+					--font-size-5xl: 4rem;
 
 					/* Line heights */
-					--leading-tight: 1.15;
-					--leading-snug: 1.3;
+					--leading-tight: 1.1;
+					--leading-snug: 1.25;
 					--leading-normal: 1.5;
-					--leading-relaxed: 1.7;
+					--leading-relaxed: 1.65;
 
 					/* Spacing - more generous */
 					--spacing-1: 0.25rem;
@@ -247,10 +247,10 @@ const isLoggedIn = !!Astro.locals.user;
 					--avatar-size-lg: 32px;
 
 					/* Letter spacing */
-					--tracking-tight: -0.03em;
-					--tracking-snug: -0.02em;
-					--tracking-wide: 0.06em;
-					--tracking-wider: 0.08em;
+					--tracking-tight: -0.035em;
+					--tracking-snug: -0.025em;
+					--tracking-wide: 0.05em;
+					--tracking-wider: 0.07em;
 
 					/* Tag pill */
 					--tag-padding-y: 2px;
@@ -327,8 +327,19 @@ const isLoggedIn = !!Astro.locals.user;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
 					min-height: 100vh;
-					background-image: radial-gradient(ellipse at 50% 0%, var(--color-bg-subtle) 0%, var(--color-bg) 60%);
-					background-attachment: fixed;
+				}
+
+				/* Subtle paper texture */
+				body::before {
+					content: '';
+					position: fixed;
+					inset: 0;
+					pointer-events: none;
+					z-index: 9998;
+					opacity: 0.015;
+					background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+					background-repeat: repeat;
+					background-size: 200px 200px;
 				}
 
 				a:where(:not([class*="emdash"]):not([class*="ec-"])) {
@@ -389,20 +400,21 @@ const isLoggedIn = !!Astro.locals.user;
 					transition:
 						color var(--transition-fast),
 						background var(--transition-fast),
-						transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+						transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 				}
 
 				.tag-pill:hover {
 					color: var(--color-text);
 					background: var(--color-border);
-					transform: scale(1.08);
+					transform: scale(1.03);
 				}
 
 				/* Link underline on hover */
 				a:where(:not([class*="emdash"]):not([class*="ec-"])):hover {
 					text-decoration: underline;
 					text-underline-offset: 3px;
-					text-decoration-thickness: 1.5px;
+					text-decoration-thickness: 1px;
+					text-decoration-color: var(--color-accent);
 				}
 
 				/* Blockquote styling */
@@ -457,17 +469,17 @@ const isLoggedIn = !!Astro.locals.user;
 
 				/* Scrollbar styling */
 				::-webkit-scrollbar {
-					width: 8px;
-					height: 8px;
+					width: 6px;
+					height: 6px;
 				}
 
 				::-webkit-scrollbar-track {
-					background: var(--color-bg-subtle);
+					background: transparent;
 				}
 
 				::-webkit-scrollbar-thumb {
 					background: var(--color-border);
-					border-radius: 4px;
+					border-radius: 3px;
 				}
 
 				::-webkit-scrollbar-thumb:hover {
@@ -536,10 +548,10 @@ const isLoggedIn = !!Astro.locals.user;
 			/* Scroll reveal */
 			.reveal {
 				opacity: 0;
-				transform: translateY(24px);
+				transform: translateY(12px);
 				transition:
-					opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
-					transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+					opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+					transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 			}
 
 			.reveal.revealed {

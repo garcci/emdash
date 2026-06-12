@@ -121,7 +121,7 @@ const publishedAt = post.data.publishedAt;
 		overflow: hidden;
 		border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
 		background: var(--color-surface);
-		transition: box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+		transition: box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.featured-image img {
@@ -129,7 +129,7 @@ const publishedAt = post.data.publishedAt;
 		height: auto;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
-		transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+		transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 		will-change: transform;
 	}
 
@@ -140,7 +140,7 @@ const publishedAt = post.data.publishedAt;
 
 	.featured-image-link:hover .featured-image img,
 	.featured-grid:has(.featured-title-link:hover) .featured-image img {
-		transform: scale(1.06);
+		transform: scale(1.03);
 	}
 
 	.featured-content {
@@ -200,21 +200,12 @@ const publishedAt = post.data.publishedAt;
 		color: inherit;
 	}
 
-	@keyframes heartbeat {
-		0%, 100% { transform: scale(1); }
-		14% { transform: scale(1.03); }
-		28% { transform: scale(1); }
-		42% { transform: scale(1.03); }
-		70% { transform: scale(1); }
-	}
-
 	.featured-title {
 		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
 		font-weight: 700;
 		line-height: var(--leading-tight);
 		letter-spacing: var(--tracking-tight);
 		transition: color var(--transition-fast);
-		animation: heartbeat 2s ease-in-out infinite;
 	}
 
 	.featured-title-link:hover .featured-title,
