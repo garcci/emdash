@@ -28,6 +28,12 @@ import Base from "../layouts/Base.astro";
 	}
 
 	.not-found a {
-		color: var(--color-text);
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color var(--transition-fast);
+	}
+
+	.not-found a:hover {
+		color: var(--color-accent-hover);
 	}
 </style>

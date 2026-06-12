@@ -94,7 +94,7 @@ const publishDate = formatDate(post.data.publishedAt);
 	robots={seo.robots}
 	type="article"
 	publishedTime={post.data.publishedAt?.toISOString() ?? null}
-	modifiedTime={post.data.updatedAt.toISOString()}
+	modifiedTime={post.data.updatedAt?.toISOString() ?? null}
 	content={{ collection: "posts", id: post.data.id, slug }}
 >
 	<article class="article">
