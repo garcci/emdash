@@ -2,41 +2,45 @@
 // Inline theme script: must run before paint to avoid flash
 ---
 
+<meta name="color-scheme" content="light dark" />
+
 <script is:inline>
-	// Apply theme immediately to prevent flash
+	// Apply system preference only if no explicit theme class is already set (SSR)
 	(function () {
-		var c = document.cookie;
-		var i = c.indexOf("theme=");
-		var theme = i >= 0 ? c.slice(i + 6).split(";")[0] : null;
-		if (theme === "dark" || theme === "light") {
-			document.documentElement.classList.add(theme);
-		} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-			document.documentElement.classList.add("dark");
+		var root = document.documentElement;
+		// If server already applied a theme class, do nothing
+		if (root.classList.contains("dark") || root.classList.contains("light")) {
+			return;
+		}
+		// Otherwise, fall back to system preference
+		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			root.classList.add("dark");
 		}
 	})();
 </script>
 
-<script>
+<script is:inline>
 	// Theme switcher controls
 	const THEME_REGEX = /theme=([^;]+)/;
-	const themeBtns =
-		document.querySelectorAll<HTMLButtonElement>(".theme-btn");
-	const root = document.documentElement;
+	var themeBtns =
+		document.querySelectorAll(".theme-btn");
+	var root = document.documentElement;
 
 	function setCookie(
-		name: string,
-		value: string,
-		maxAge: number = 31536000
+		name,
+		value,
+		maxAge
 	) {
-		const secure = location.protocol === "https:" ? "; Secure" : "";
+		maxAge = maxAge || 31536000;
+		var secure = location.protocol === "https:" ? "; Secure" : "";
 		if (value === "") {
-			document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${secure}`;
+			document.cookie = name + "=; path=/; max-age=0; SameSite=Lax" + secure;
 		} else {
-			document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secure}`;
+			document.cookie = name + "=" + value + "; path=/; max-age=" + maxAge + "; SameSite=Lax" + secure;
 		}
 	}
 
-	function setTheme(theme: string) {
+	function setTheme(theme) {
 		if (theme === "system") {
 			setCookie("theme", "");
 			root.classList.remove("light", "dark");
@@ -51,23 +55,23 @@
 		updateActiveBtn(theme);
 	}
 
-	function updateActiveBtn(theme: string) {
-		themeBtns.forEach((btn) => {
+	function updateActiveBtn(theme) {
+		themeBtns.forEach(function(btn) {
 			btn.classList.toggle("active", btn.dataset.theme === theme);
 		});
 	}
 
-	function getStoredTheme(): string {
-		const match = document.cookie.match(THEME_REGEX);
+	function getStoredTheme() {
+		var match = document.cookie.match(THEME_REGEX);
 		return match ? match[1] : "system";
 	}
 
-	// Initialize
-	const storedTheme = getStoredTheme();
-	setTheme(storedTheme);
+	// Initialize active button state only (theme already applied by inline script above)
+	var storedTheme = getStoredTheme();
+	updateActiveBtn(storedTheme);
 
-	themeBtns.forEach((btn) => {
-		btn.addEventListener("click", () => {
+	themeBtns.forEach(function(btn) {
+		btn.addEventListener("click", function() {
 			setTheme(btn.dataset.theme || "system");
 		});
 	});
@@ -75,7 +79,7 @@
 	// Listen for system preference changes
 	window
 		.matchMedia("(prefers-color-scheme: dark)")
-		.addEventListener("change", (e) => {
+		.addEventListener("change", function(e) {
 			if (getStoredTheme() === "system") {
 				root.classList.toggle("dark", e.matches);
 			}

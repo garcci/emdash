@@ -76,10 +76,19 @@ const pageCtx = createPublicPageContext({
 
 // Check if user is logged in (for showing admin link)
 const isLoggedIn = !!Astro.locals.user;
+
+// Read theme cookie for server-side theme application (prevents flash)
+const themeCookie = Astro.cookies.get("theme")?.value;
+let themeClass = "";
+if (themeCookie === "dark") {
+	themeClass = "dark";
+} else if (themeCookie === "light") {
+	themeClass = "light";
+}
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class={themeClass}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
