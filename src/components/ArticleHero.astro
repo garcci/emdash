@@ -1,8 +1,9 @@
 ---
+import type { MediaValue } from "emdash";
 import ImageRenderer from "./ImageRenderer.astro";
 
 interface Props {
-	image: any;
+	image: MediaValue | undefined;
 	title: string;
 	edit?: any;
 }

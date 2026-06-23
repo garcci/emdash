@@ -83,13 +83,23 @@ const otherPostsWithTags = otherPosts.map((p) => ({
 }));
 
 // Extract headings from Portable Text for server-side TOC rendering
-function extractPortableTextText(block: any): string {
-	if (!block.children || !Array.isArray(block.children)) return "";
-	return block.children.map((child: any) => child.text || "").join("");
+interface PortableTextChild {
+	text?: string;
 }
 
-const tocHeadings = ((post.data.content || []) as any[])
-	.filter((block) => block._type === "block" && ["h2", "h3"].includes(block.style))
+interface PortableTextHeadingBlock {
+	_type: string;
+	style?: string;
+	children?: PortableTextChild[];
+}
+
+function extractPortableTextText(block: PortableTextHeadingBlock): string {
+	if (!block.children || !Array.isArray(block.children)) return "";
+	return block.children.map((child) => child.text || "").join("");
+}
+
+const tocHeadings = ((post.data.content || []) as PortableTextHeadingBlock[])
+	.filter((block) => block._type === "block" && ["h2", "h3"].includes(block.style ?? ""))
 	.map((block, index) => {
 		const text = extractPortableTextText(block);
 		return {

@@ -1,11 +1,12 @@
 ---
+import type { EmDashEntry, ContentBylineCredit } from "emdash";
 import PostCard from "./PostCard.astro";
 
 interface Props {
 	posts: Array<{
-		post: any;
+		post: EmDashEntry;
 		tags: Array<{ slug: string; label: string }>;
-		bylines: any[];
+		bylines: ContentBylineCredit[];
 		readingTime: string;
 	}>;
 	title?: string;

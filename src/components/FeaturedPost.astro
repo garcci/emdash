@@ -131,6 +131,13 @@ const publishedAt = post.data.publishedAt;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
 		transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+		/* will-change removed from default state — only apply on hover
+		 * to avoid creating compositor layers unnecessarily.
+		 */
+	}
+
+	.featured-image-link:hover .featured-image img,
+	.featured-grid:has(.featured-title-link:hover) .featured-image img {
 		will-change: filter;
 	}
 

@@ -286,8 +286,9 @@ if (themeCookie === "dark") {
 						--color-border: #2a2a2a;
 						--color-border-subtle: #1f1f1f;
 						--color-surface: #181818;
-						--color-accent: #4d9fff;
-						--color-accent-hover: #6eb0ff;
+						/* Accent bumped from #4d9fff for better contrast on dark bg */
+						--color-accent: #66b3ff;
+						--color-accent-hover: #80ccff;
 					}
 				}
 
@@ -301,12 +302,24 @@ if (themeCookie === "dark") {
 					--color-border: #2a2a2a;
 					--color-border-subtle: #1f1f1f;
 					--color-surface: #181818;
-					--color-accent: #4d9fff;
-					--color-accent-hover: #6eb0ff;
+					/* Accent bumped from #4d9fff for better contrast on dark bg */
+					--color-accent: #66b3ff;
+					--color-accent-hover: #80ccff;
 				}
 
 				html {
 					scroll-behavior: smooth;
+				}
+
+				@media (prefers-reduced-motion: no-preference) {
+					html {
+						/* Smooth transition between light and dark theme variables */
+						transition:
+							color var(--transition-base),
+							background-color var(--transition-base),
+							border-color var(--transition-base),
+							box-shadow var(--transition-base);
+					}
 				}
 
 				@media (prefers-reduced-motion: reduce) {
@@ -329,6 +342,15 @@ if (themeCookie === "dark") {
 						animation-iteration-count: 1 !important;
 						transition-duration: 0.01ms !important;
 					}
+
+					/* Also freeze any transform / opacity states that may be driven
+					 * by :hover or scroll-triggered JS classes.
+					 */
+					.reveal.revealed,
+					.back-to-top.visible {
+						transform: none !important;
+						opacity: 1 !important;
+					}
 				}
 
 				body {
@@ -342,18 +364,9 @@ if (themeCookie === "dark") {
 					min-height: 100vh;
 				}
 
-				/* Subtle paper texture */
-				body::before {
-					content: '';
-					position: fixed;
-					inset: 0;
-					pointer-events: none;
-					z-index: 9998;
-					opacity: 0.015;
-					background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-					background-repeat: repeat;
-					background-size: 200px 200px;
-				}
+				/* Paper texture removed — SVG fractalNoise filter caused GPU compositor
+				 * overhead on every frame with negligible visual benefit (opacity 0.015).
+				 */
 
 				a:where(:not([class*="emdash"]):not([class*="ec-"])) {
 					color: var(--color-accent);
@@ -391,6 +404,18 @@ if (themeCookie === "dark") {
 				::selection {
 					background: var(--color-accent);
 					color: var(--color-on-accent);
+				}
+
+				/* Shared keyframes — extracted from components to avoid duplication */
+				@keyframes fadeInUp {
+					from {
+						opacity: 0;
+						transform: translateY(16px);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0);
+					}
 				}
 
 				/* Meta dot — small separator used in post listings and cards */
@@ -473,8 +498,13 @@ if (themeCookie === "dark") {
 					margin: var(--spacing-12) 0;
 				}
 
-				/* Focus states */
-				:focus-visible {
+				/* Focus states — scoped to interactive elements only */
+				a:focus-visible,
+				button:focus-visible,
+				input:focus-visible,
+				textarea:focus-visible,
+				select:focus-visible,
+				[tabindex]:not([tabindex="-1"]):focus-visible {
 					outline: 2px solid var(--color-accent);
 					outline-offset: 2px;
 					border-radius: var(--radius);
@@ -545,7 +575,10 @@ if (themeCookie === "dark") {
 				}
 			}
 
-			/* Reading progress bar */
+			/* Reading progress bar — transition removed to avoid conflict with
+			 * JS-driven rAF updates. Width is updated directly in JS for smooth,
+			 * jank-free progress tracking.
+			 */
 			.reading-progress {
 				position: fixed;
 				top: 0;
@@ -554,7 +587,6 @@ if (themeCookie === "dark") {
 				width: 0;
 				background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
 				z-index: 9999;
-				transition: width 0.1s linear;
 				box-shadow: 0 0 6px var(--color-accent-ring);
 			}
 
@@ -658,13 +690,22 @@ if (themeCookie === "dark") {
 				const backToTop = document.querySelector('.back-to-top');
 
 				let ticking = false;
+				let ariaThrottle = null;
 				function updateProgress() {
 					const scrollTop = window.scrollY || document.documentElement.scrollTop;
 					const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 					const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 					if (progressBar) {
 						progressBar.style.width = progress + '%';
-						progressBar.setAttribute('aria-valuenow', Math.round(progress));
+						/* Throttle aria-valuenow updates to avoid forcing the
+						 * accessibility tree to rebuild on every frame.
+						 */
+						if (!ariaThrottle) {
+							ariaThrottle = setTimeout(function() {
+								progressBar.setAttribute('aria-valuenow', Math.round(progress));
+								ariaThrottle = null;
+							}, 250);
+						}
 					}
 					if (backToTop) {
 						if (scrollTop > 400) {

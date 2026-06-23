@@ -8,6 +8,7 @@ import PageHeader from "../../components/PageHeader.astro";
 // published_at and avoids a full-table scan on the client.
 const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
 	orderBy: { published_at: "desc" },
+	limit: 50,
 });
 
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);

@@ -60,16 +60,21 @@ const { title, description, actionText, actionHref } = Astro.props;
 
 	.btn:hover {
 		background: var(--color-accent-hover);
-		transform: translateY(-2px) scale(1.02);
 		box-shadow: var(--shadow-card-hover);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.btn:hover {
+			transform: translateY(-2px) scale(1.02);
+		}
+
+		.btn:active {
+			transform: translateY(0) scale(0.98);
+		}
 	}
 
 	.btn:focus-visible {
 		outline: 2px solid var(--color-accent);
 		outline-offset: 2px;
-	}
-
-	.btn:active {
-		transform: translateY(0) scale(0.98);
 	}
 </style>

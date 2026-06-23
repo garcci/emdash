@@ -67,15 +67,24 @@ const currentPath = Astro.url.pathname;
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		/* Premium glassmorphism: more transparent + higher blur + saturation boost */
+		/* Glassmorphism: reduced blur/saturate for lower GPU cost per frame.
+		 * Old values (blur(24px) saturate(1.6)) caused noticeable compositor
+		 * overhead during scroll on mid-range devices.
+		 */
 		background: color-mix(in srgb, var(--color-bg) 65%, transparent);
-		backdrop-filter: blur(24px) saturate(1.6);
-		-webkit-backdrop-filter: blur(24px) saturate(1.6);
+		backdrop-filter: blur(12px) saturate(1.2);
+		-webkit-backdrop-filter: blur(12px) saturate(1.2);
 		/* Subtle bottom border with glass feel */
 		border-bottom: 1px solid color-mix(in srgb, var(--color-border) 30%, transparent);
 		/* Top edge highlight — simulates glass refraction */
 		box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--color-text) 4%, transparent);
-		transform: translateZ(0);
+	}
+
+	/* Fallback for browsers without backdrop-filter support */
+	@supports not (backdrop-filter: blur(12px)) {
+		.site-header {
+			background: var(--color-bg);
+		}
 	}
 
 	.nav {
