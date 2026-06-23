@@ -1,5 +1,6 @@
 ---
 import { WidgetArea } from "emdash/ui";
+import { safeUrl } from "../utils/url-security";
 
 interface Page {
 	data: { slug?: string; title: string };
@@ -25,6 +26,9 @@ interface Props {
 }
 
 const { siteTitle, siteTagline, siteLogo, pages, socialMenu } = Astro.props;
+
+// Sanitize logo URL before rendering in img src
+const sanitizedLogoUrl = siteLogo?.url ? safeUrl(siteLogo.url, "") : "";
 ---
 
 <footer class="site-footer">
@@ -34,7 +38,7 @@ const { siteTitle, siteTagline, siteLogo, pages, socialMenu } = Astro.props;
 				<a href="/" class="footer-logo">
 					{
 						siteLogo
-							? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="footer-logo-img" />
+							? <img src={sanitizedLogoUrl} alt={siteLogo.alt || siteTitle} class="footer-logo-img" />
 							: siteTitle
 					}
 				</a>

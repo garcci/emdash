@@ -6,7 +6,10 @@ import Base from "../layouts/Base.astro";
 import SearchForm from "../components/SearchForm.astro";
 import SearchResults from "../components/SearchResults.astro";
 
-const query = Astro.url.searchParams.get("q")?.trim() || "";
+// Limit query length to prevent search DoS / excessive resource usage
+const MAX_QUERY_LENGTH = 200;
+const rawQuery = Astro.url.searchParams.get("q")?.trim() || "";
+const query = rawQuery.length > MAX_QUERY_LENGTH ? rawQuery.slice(0, MAX_QUERY_LENGTH) : rawQuery;
 
 // Use the FTS-backed search() API instead of loading every post and
 // filtering in JS. FTS scales as the post count grows, returns ranked

@@ -1,5 +1,6 @@
 ---
 import LiveSearch from "emdash/ui/search";
+import { safeUrl } from "../utils/url-security";
 
 interface MenuItem {
 	url: string;
@@ -15,6 +16,9 @@ interface Props {
 }
 
 const { siteTitle, siteLogo, menuItems = [], isLoggedIn } = Astro.props;
+
+// Sanitize logo URL before rendering in img src
+const sanitizedLogoUrl = siteLogo?.url ? safeUrl(siteLogo.url, "") : "";
 // Get current path for aria-current
 const currentPath = Astro.url.pathname;
 ---
@@ -24,7 +28,7 @@ const currentPath = Astro.url.pathname;
 		<a href="/" class="site-title">
 			{
 				siteLogo
-					? <img src={siteLogo.url} alt={siteLogo.alt || siteTitle} class="site-logo-img" />
+					? <img src={sanitizedLogoUrl} alt={siteLogo.alt || siteTitle} class="site-logo-img" />
 					: siteTitle
 			}
 		</a>
